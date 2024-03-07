@@ -5,6 +5,12 @@ const movieSchema = new Schema({
     type: String,
     required: true,
   },
+  year: Number,
+  title_id: Number,
+  imdb_id: String,
+  tmdb_id: Number,
+  tmdb_type: String,
+  type: String,
 });
 
 const MovieModel = models.movie || model("movie", movieSchema);
