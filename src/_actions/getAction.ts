@@ -57,8 +57,21 @@ export async function getMovieDetails() {
 export async function getMovies() {
   try {
     await connectDB();
-    const movies = await MovieModel.find().limit(100).lean();
+    const movies = await MovieModel.find()
+      .limit(100)
+      .select("title poster plot_overview")
+      .lean();
     return movies;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getMovieById(id: string): Promise<Movie | undefined> {
+  try {
+    await connectDB();
+    const movie = await MovieModel.findById(id).lean();
+    return movie as Movie;
   } catch (error) {
     console.log(error);
   }
