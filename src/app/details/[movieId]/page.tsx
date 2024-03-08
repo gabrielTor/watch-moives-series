@@ -9,14 +9,14 @@ interface Props {
 export default async function page({ params }: Props) {
   const movie = await getMovieById(params.movieId);
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 text-white">
       <h2 className="text-3xl font-bold mb-2">{movie?.title}</h2>
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/3">
           <img
             src={movie?.poster}
             alt={movie?.title}
-            className="rounded-lg mb-4"
+            className="rounded-lg mb-4 w-full"
           />
         </div>
         <div className="w-full md:w-2/3 md:pl-4">
@@ -27,7 +27,7 @@ export default async function page({ params }: Props) {
             <strong>Plot Overview:</strong> {movie?.plot_overview}
           </p>
           <p>
-            <strong>Runtime Minutes:</strong> {movie?.runtime_minutes}
+            <strong>Duration:</strong> {movie?.runtime_minutes}
           </p>
           <p>
             <strong>Release Date:</strong> {movie?.release_date}
@@ -38,6 +38,20 @@ export default async function page({ params }: Props) {
           <p>
             <strong>Type:</strong> {movie?.type}
           </p>
+          <strong className="mt-4 block">Links:</strong>
+          <ul className="list-disc pl-4 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+            {movie?.sources?.map((source) => (
+              <li key={source?._id}>
+                <Link
+                  href={source.web_url}
+                  target="_blank"
+                  className="text-blue-400 hover:underline"
+                >
+                  {source.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
           {movie?.trailer && (
             <div className="mt-4">
               <iframe
@@ -53,20 +67,6 @@ export default async function page({ params }: Props) {
               ></iframe>
             </div>
           )}
-          <strong className="mt-4 block">Sources:</strong>
-          <ul className="list-disc pl-4">
-            {movie?.sources?.map((source, index) => (
-              <li key={index}>
-                <Link
-                  href={source.web_url}
-                  target="_blank"
-                  className="text-blue-600 hover:underline"
-                >
-                  {source.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>

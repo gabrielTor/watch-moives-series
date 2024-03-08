@@ -14,5 +14,5 @@ interface Movie {
   genre_names?: string[];
   trailer?: string;
   trailer_thumbnail?: string;
-  sources?: { name: string; web_url: string }[];
+  sources?: { name: string; web_url: string; _id?: string }[];
 }

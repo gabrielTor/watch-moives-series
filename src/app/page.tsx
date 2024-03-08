@@ -5,8 +5,8 @@ export default async function Home() {
   const movies = await getMovies();
 
   return (
-    <main className="p-4 bg-slate-700">
+    <section className="p-4">
       <Movies movies={movies} />
-    </main>
+    </section>
   );
 }

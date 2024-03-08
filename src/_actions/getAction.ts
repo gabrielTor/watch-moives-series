@@ -54,14 +54,14 @@ export async function getMovieDetails() {
   }
 }
 
-export async function getMovies() {
+export async function getMovies(): Promise<Movie[] | undefined> {
   try {
     await connectDB();
     const movies = await MovieModel.find()
       .limit(100)
       .select("title poster plot_overview")
       .lean();
-    return movies;
+    return movies as Movie[];
   } catch (error) {
     console.log(error);
   }
