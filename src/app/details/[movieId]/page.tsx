@@ -1,5 +1,6 @@
 import { getMovieById } from "@/_actions/getAction";
 import { getYouTubeId } from "@/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
@@ -13,10 +14,13 @@ export default async function page({ params }: Props) {
       <h2 className="text-3xl font-bold mb-2">{movie?.title}</h2>
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/3">
-          <img
+          <Image
+            //@ts-ignore
             src={movie?.poster}
-            alt={movie?.title}
+            alt={movie?.title as string}
             className="rounded-lg mb-4 w-full"
+            width={5000}
+            height={5000}
           />
         </div>
         <div className="w-full md:w-2/3 md:pl-4">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
@@ -13,10 +14,13 @@ export default function Movies({ movies }: Props) {
           key={movie._id}
           className="group bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-gray-100"
         >
-          <img
+          <Image
+            //@ts-ignore
             src={movie.poster}
             alt={movie.title}
             className="w-full h-48 object-cover"
+            width={5000}
+            height={5000}
           />
           <div className="p-4">
             <h2 className="text-xl font-bold mb-2">{movie.title}</h2>
