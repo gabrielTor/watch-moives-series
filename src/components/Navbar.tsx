@@ -1,5 +1,6 @@
 import Link from "next/link";
 import MovieDBLogo from "./MovieDBLogo";
+import Search from "./Search";
 
 const navLinks = [
   { path: "/", label: "Home" },
@@ -11,9 +12,9 @@ const navLinks = [
 
 const Navbar = () => {
   return (
-    <nav className="bg-navy shadow-lg">
+    <nav className="bg-navy shadow-2xl">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <MovieDBLogo />
@@ -24,13 +25,14 @@ const Navbar = () => {
                   key={link.path}
                   href={link.path}
                   aria-label={link.label}
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-300 hover:bg-aqua hover:text-white px-3 py-2 rounded-md font-medium"
                 >
                   {link.label}
                 </Link>
               ))}
             </span>
           </div>
+          <Search />
         </div>
       </div>
     </nav>
