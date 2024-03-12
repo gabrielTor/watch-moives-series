@@ -1,4 +1,13 @@
+import Link from "next/link";
 import MovieDBLogo from "./MovieDBLogo";
+
+const navLinks = [
+  { path: "/", label: "Home" },
+  { path: "/?type=upcoming", label: "Upcoming Movies" },
+  { path: "/?type=top_rated", label: "Top Rated MOvies" },
+  { path: "/?type=series", label: "Series" },
+  { path: "/?type=anime", label: "Anime" },
+];
 
 const Navbar = () => {
   return (
@@ -10,30 +19,16 @@ const Navbar = () => {
               <MovieDBLogo />
             </div>
             <div className="hidden sm:ml-6 sm:flex my-auto">
-              <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Home
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Movies
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                TV Shows
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                About
-              </a>
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  aria-label={link.label}
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
