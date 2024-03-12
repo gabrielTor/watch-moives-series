@@ -7,8 +7,8 @@ interface Props {
 }
 
 const truncateText = (text: string) => {
-  if (text.length > 225) {
-    return text.slice(0, 225) + "...";
+  if (text.length > 110) {
+    return text.slice(0, 110) + "...";
   }
   return text;
 };
@@ -32,7 +32,9 @@ export default function Movies({ movies }: Props) {
           />
           <div className="p-4">
             <h2 className="text-xl font-bold mb-2 truncate">{movie.title}</h2>
-            <p className="text-gray-700 h-48">{truncateText(movie.overview)}</p>
+            <p className="text-gray-700 overflow-hidden max-h-24">
+              {truncateText(movie.overview)}
+            </p>
           </div>
         </Link>
       ))}
