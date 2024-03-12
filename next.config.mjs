@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "cdn.watchmode.com",
       },
+      {
+        hostname: "image.tmdb.org",
+      },
     ],
   },
 };

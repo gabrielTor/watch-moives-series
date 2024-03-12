@@ -1,4 +1,4 @@
-import { getMovies } from "@/_actions/getAction";
+import { getMovies } from "@/actions/get";
 import Movies from "@/components/Movies";
 
 export default async function Home() {
@@ -6,7 +6,7 @@ export default async function Home() {
 
   return (
     <section className="p-4">
-      <Movies movies={movies} />
+      <Movies movies={movies?.results} />
     </section>
   );
 }

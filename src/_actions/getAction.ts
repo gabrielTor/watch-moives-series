@@ -1,5 +1,5 @@
 "use server";
-import connectDB from "@/config/config";
+import connectDB from "@/config/db";
 import MovieModel from "@/models/movie";
 import axios from "axios";
 
