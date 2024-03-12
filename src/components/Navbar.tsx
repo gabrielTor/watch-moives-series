@@ -18,7 +18,7 @@ const Navbar = () => {
             <div className="flex-shrink-0 flex items-center">
               <MovieDBLogo />
             </div>
-            <div className="hidden sm:ml-6 sm:flex my-auto">
+            <span className="hidden sm:ml-6 sm:flex my-auto">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
@@ -29,7 +29,7 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
-            </div>
+            </span>
           </div>
         </div>
       </div>
