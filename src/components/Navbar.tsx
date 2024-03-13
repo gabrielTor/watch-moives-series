@@ -1,6 +1,8 @@
+"use client";
 import Link from "next/link";
 import MovieDBLogo from "./MovieDBLogo";
 import Search from "./Search";
+import { useState } from "react";
 
 const navLinks = [
   { path: "/", label: "Home" },
@@ -11,6 +13,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   return (
     <nav className="bg-navy shadow-2xl">
       <div className="max-w-7xl mx-auto px-4">
