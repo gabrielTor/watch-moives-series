@@ -3,7 +3,7 @@ const VideoPlayer = ({ imdb_id }: { imdb_id: number }) => {
 
   return (
     <iframe
-      className="w-full my-4 flex-grow"
+      className="w-full my-4 lg:flex-grow lg:h-auto h-96"
       src={embedUrl}
       frameBorder="0"
       allowFullScreen

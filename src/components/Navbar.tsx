@@ -7,7 +7,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import MobileNav from "./MobileNav";
 import useClickOutside from "@/hooks/useClickOutside";
 
-const navLinks = [
+export const navLinks = [
   { path: "/", label: "Home" },
   { path: "/?type=upcoming", label: "Upcoming Movies" },
   { path: "/?type=top_rated", label: "Top Rated MOvies" },
