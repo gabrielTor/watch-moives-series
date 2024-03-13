@@ -1,18 +1,16 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 
 interface Props {
   amountOfPages: number;
   currentPage: number;
 }
+const maxVisiblePages = 5;
+const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
 
 export default function PageNumbers({ amountOfPages, currentPage }: Props) {
   const { push } = useRouter();
   if (!amountOfPages) return null;
-
-  const maxVisiblePages = 5;
-  const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
 
   const startPage = Math.max(1, currentPage - halfMaxVisiblePages);
   const endPage = Math.min(startPage + maxVisiblePages - 1, amountOfPages);
@@ -37,7 +35,7 @@ export default function PageNumbers({ amountOfPages, currentPage }: Props) {
       <button
         onClick={prevPage}
         aria-label="previous"
-        className="rounded-full px-3 py-1 lg:px-5 lg:py-2 hover:bg-gray-200 hover:bg-opacity-50"
+        className="rounded-full px-3 py-1 lg:px-5 lg:py-2 hover:bg-aqua"
       >
         &lt;
       </button>
@@ -58,7 +56,7 @@ export default function PageNumbers({ amountOfPages, currentPage }: Props) {
       <button
         onClick={nextPage}
         aria-label="next"
-        className="rounded-full px-3 py-1 lg:px-5 lg:py-2 hover:bg-gray-200 hover:bg-opacity-50"
+        className="rounded-full px-3 py-1 lg:px-5 lg:py-2 hover:bg-aqua"
       >
         &gt;
       </button>

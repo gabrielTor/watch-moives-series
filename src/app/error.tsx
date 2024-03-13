@@ -14,7 +14,7 @@ const GlobalError = ({
           Something went wrong!
         </h2>
         <p className="text-gray-800 mb-4">
-          We're experiencing technical difficulties, and our team is working
+          We´re experiencing technical difficulties, and our team is working
           hard to bring the site back up. This may take a while. Thank you for
           your patience.
         </p>

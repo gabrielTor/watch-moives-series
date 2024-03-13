@@ -8,7 +8,7 @@ export default function Search() {
         className="bg-transparent border-transparent focus:border-transparent focus:ring-0 pr-2"
         placeholder="Search"
       />
-      <IoSearch />
+      <IoSearch className="text-lg" />
     </form>
   );
 }
