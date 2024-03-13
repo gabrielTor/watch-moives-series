@@ -27,8 +27,8 @@ export default function Movies({ movies }: Props) {
             src={getSrc(movie.poster_path)}
             alt={movie.title}
             className="w-full h-48 object-cover"
-            width={5000}
-            height={5000}
+            width={800}
+            height={800}
           />
           <div className="p-4">
             <h2 className="text-xl font-bold mb-2 truncate">{movie.title}</h2>

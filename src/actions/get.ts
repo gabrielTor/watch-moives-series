@@ -1,10 +1,8 @@
 "use server";
-// import connectDB from "@/config/config";
-// import MovieModel from "@/models/movie";
 import api from "@/config/movieApi";
 
 export async function getMovies(
-  page: number = 1
+  page: string = "1"
 ): Promise<MovieDbResponse | undefined> {
   try {
     const popularMovies = await api.get(`/popular?page=${page}`);

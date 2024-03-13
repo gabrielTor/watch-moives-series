@@ -1,14 +1,14 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 interface Props {
   amountOfPages: number;
   currentPage: number;
-  onClick: (number: number) => void;
 }
 
-export default function PageNumbers({
-  amountOfPages,
-  currentPage,
-  onClick,
-}: Props) {
+export default function PageNumbers({ amountOfPages, currentPage }: Props) {
+  const { push } = useRouter();
   if (!amountOfPages) return null;
 
   const maxVisiblePages = 5;
@@ -17,16 +17,18 @@ export default function PageNumbers({
   const startPage = Math.max(1, currentPage - halfMaxVisiblePages);
   const endPage = Math.min(startPage + maxVisiblePages - 1, amountOfPages);
 
-  //const renderDots = startPage > 1 || endPage < amountOfPages;
+  const navigateToPage = (pageNumber: number) => {
+    push(`/?page=${pageNumber}`);
+  };
 
   const nextPage = () => {
     if (currentPage !== amountOfPages) {
-      onClick(currentPage + 1);
+      navigateToPage(currentPage + 1);
     }
   };
   const prevPage = () => {
     if (currentPage !== 1) {
-      onClick(currentPage - 1);
+      navigateToPage(currentPage - 1);
     }
   };
 
@@ -39,22 +41,20 @@ export default function PageNumbers({
       >
         &lt;
       </button>
-      {/* {renderDots && startPage > 1 && <span>...</span>} */}
       {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
         <button
-          onClick={() => onClick(startPage + index)}
+          onClick={() => navigateToPage(startPage + index)}
           key={startPage + index}
           aria-label="pagination"
           className={`${
             currentPage === startPage + index
-              ? "bg-blue-300"
-              : "hover:bg-gray-200 hover:bg-opacity-50"
+              ? "bg-navy text-white"
+              : "hover:bg-aqua"
           } rounded-full px-3 py-1 lg:px-5 lg:py-2`}
         >
           {startPage + index}
         </button>
       ))}
-      {/* {renderDots && endPage < amountOfPages && <span>...</span>} */}
       <button
         onClick={nextPage}
         aria-label="next"
