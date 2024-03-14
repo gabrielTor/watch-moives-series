@@ -10,7 +10,7 @@ import useClickOutside from "@/hooks/useClickOutside";
 export const navLinks = [
   { path: "/", label: "Home" },
   { path: "/?type=upcoming", label: "Upcoming Movies" },
-  { path: "/?type=top_rated", label: "Top Rated MOvies" },
+  { path: "/?type=top_rated", label: "Top Rated Movies" },
   { path: "/?type=series", label: "Series" },
   { path: "/?type=anime", label: "Anime" },
 ];
