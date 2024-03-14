@@ -29,7 +29,6 @@ export async function getSearchedMovies(
     const movieQuery = await api.get(
       `/search/movie?page=${page}&query=${query}`
     );
-    console.log(movieQuery.data);
     return movieQuery.data;
   } catch (error) {
     console.log(error);
