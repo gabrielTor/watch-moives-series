@@ -23,14 +23,10 @@ export async function getMovieById(id: string): Promise<MovieData | undefined> {
 
 export async function getSearchedMovies(
   page: string = "1",
-  query: string | FormData
+  query: string
 ): Promise<MovieDbResponse | undefined> {
   try {
-    let search = query;
-    if (query instanceof FormData) {
-      search = query.get("search") as string;
-    }
-    const movieQuery = await api.get(`/popular?page=${page}&query=${search}`);
+    const movieQuery = await api.get(`/popular?page=${page}&query=${query}`);
     console.log(movieQuery.data);
     return movieQuery.data;
   } catch (error) {
