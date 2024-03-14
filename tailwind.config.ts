@@ -13,6 +13,9 @@ const config: Config = {
         liteBlue: "#01b4e4",
         aqua: "#90cea1",
       },
+      screens: {
+        xs: "380px",
+      },
     },
   },
   plugins: [],

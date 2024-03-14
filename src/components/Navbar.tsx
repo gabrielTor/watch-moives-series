@@ -32,9 +32,9 @@ const Navbar = () => {
             <button
               aria-label="meun"
               onClick={toggleMenu}
-              className="flex-shrink-0 flex items-center lg:hidden"
+              className="flex items-center lg:hidden"
             >
-              <HiMenuAlt2 className="text-white text-5xl" />
+              <HiMenuAlt2 className="text-white text-4xl xs:text-5xl" />
             </button>
             <span className="hidden sm:ml-6 lg:flex my-auto">
               {navLinks.map((link) => (
