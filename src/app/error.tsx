@@ -9,11 +9,11 @@ const GlobalError = ({
 }) => {
   return (
     <div className="grid place-items-center h-[65svh]">
-      <div className="bg-red-200 p-8 rounded-md shadow-md text-center mx-4">
+      <div className="bg-navy p-8 rounded-md shadow-md text-center mx-4">
         <h2 className="text-2xl font-bold text-red-600 mb-4">
           Something went wrong!
         </h2>
-        <p className="text-gray-800 mb-4">
+        <p className="text-red-500 mb-4">
           We´re experiencing technical difficulties, and our team is working
           hard to bring the site back up. This may take a while. Thank you for
           your patience.
