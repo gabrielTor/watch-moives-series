@@ -15,15 +15,17 @@ export default function Search() {
     <form
       ref={searchRef}
       // action={handleSearch}
-      className="text-white flex items-center bg-gray-600 h-fit rounded-3xl px-4 py-2"
+      className="text-white flex items-center bg-gray-600 h-fit rounded-3xl"
     >
       <input
         type="search"
         name="search"
-        className="bg-transparent border-transparent focus:border-transparent focus:ring-0 pr-2"
+        className="bg-transparent rounded-l-3xl pl-4 pr-2 py-2 w-44 xs:w-fit"
         placeholder="Search"
       />
-      <IoSearch className="text-lg" />
+      <button className="text-lg rounded-r-3xl px-4 py-3 hover:bg-gray-500">
+        <IoSearch />
+      </button>
     </form>
   );
 }

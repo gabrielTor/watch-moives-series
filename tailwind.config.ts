@@ -14,7 +14,7 @@ const config: Config = {
         aqua: "#90cea1",
       },
       screens: {
-        xs: "380px",
+        xs: "390px",
       },
     },
   },
