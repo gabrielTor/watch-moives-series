@@ -9,6 +9,8 @@ interface Props {
   };
 }
 
+export const revalidate = 3600 * 24;
+
 export default async function page({ searchParams }: Props) {
   const data = await getSearchedMovies(searchParams.page, searchParams.search);
 
