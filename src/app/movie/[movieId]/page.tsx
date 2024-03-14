@@ -7,6 +7,8 @@ interface Props {
   params: { movieId: string };
 }
 
+export const revalidate = 3600 * 24;
+
 export default async function page({ params }: Props) {
   const movie = await getMovieById(params.movieId);
   return (

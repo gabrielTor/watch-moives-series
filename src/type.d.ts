@@ -24,6 +24,9 @@ interface MovieResults {
   poster_path: string;
   release_date: string;
   title: string;
+  vote_average: number; //float
+  vote_count: number;
+  popularity: number; //float
 }
 
 interface MovieDbResponse {
