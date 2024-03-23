@@ -6,7 +6,7 @@ interface Props {
   searchParams: { page: string };
 }
 
-export default async function Home({ searchParams }: Props) {
+export default async function Home({ searchParams }: Readonly<Props>) {
   const movies = await getMovies(searchParams.page);
 
   return (

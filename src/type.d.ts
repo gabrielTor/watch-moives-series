@@ -66,6 +66,19 @@ interface SpokenLanguage {
   name: string;
 }
 
+interface VideoResult {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+
 interface MovieData {
   adult: boolean;
   backdrop_path: string;
@@ -92,4 +105,5 @@ interface MovieData {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  videos: { results: VideoResult[] };
 }

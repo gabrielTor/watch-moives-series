@@ -1,5 +1,6 @@
 import { getMovieById } from "@/actions/get";
 import VideoPlayer from "@/components/VideoPlayer";
+import YoutubeTrailer from "@/components/YoutubeTrailer";
 import getSrc from "@/utils/getFullImgSrc";
 import Image from "next/image";
 
@@ -15,7 +16,7 @@ export default async function page({ params }: Props) {
     <div className="container mx-auto p-4 text-white">
       <h2 className="text-3xl font-bold mb-2">{movie?.title}</h2>
       <div className="flex flex-wrap">
-        <div className="w-full md:w-1/3">
+        <div className="w-full lg:w-1/3">
           <Image
             //@ts-ignore
             src={getSrc(movie?.poster_path)}
@@ -25,7 +26,7 @@ export default async function page({ params }: Props) {
             height={5000}
           />
         </div>
-        <div className="w-full md:w-2/3 md:pl-4 flex flex-col">
+        <div className="w-full lg:w-2/3 lg:pl-4 flex flex-col">
           <p>
             <strong>Year:</strong> {movie?.release_date}
           </p>
@@ -42,7 +43,13 @@ export default async function page({ params }: Props) {
             <strong>Genres:</strong>{" "}
             {movie?.genres?.map((g) => g.name)?.join(", ")}
           </p>
-          <VideoPlayer imdb_id={movie!.id} />
+          <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
+        </div>
+        <h3 className="text-xl font-semibold">Trailers & Shorts</h3>
+        <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full">
+          {movie?.videos?.results.map((video) => (
+            <YoutubeTrailer trailerId={video.key} key={video.id} />
+          ))}
         </div>
       </div>
     </div>

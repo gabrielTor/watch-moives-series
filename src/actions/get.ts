@@ -14,7 +14,7 @@ export async function getMovies(
 
 export async function getMovieById(id: string): Promise<MovieData | undefined> {
   try {
-    const movie = await api.get("/movie/" + id);
+    const movie = await api.get(`/movie/${id}?append_to_response=videos`);
     return movie.data;
   } catch (error) {
     console.log(error);
@@ -22,8 +22,8 @@ export async function getMovieById(id: string): Promise<MovieData | undefined> {
 }
 
 export async function getSearchedMovies(
-  page: string = "1",
-  query: string
+  query: string,
+  page: string = "1"
 ): Promise<MovieDbResponse | undefined> {
   try {
     const movieQuery = await api.get(
