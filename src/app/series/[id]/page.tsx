@@ -1,5 +1,6 @@
 import React from "react";
+import Show from "../_components/Show";
 
 export default function page() {
-  return <div>Coming soon!</div>;
+  return <Show />;
 }

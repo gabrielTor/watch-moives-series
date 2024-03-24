@@ -8,8 +8,8 @@ const mockUpLoadingText = [
 
 export default function Loading() {
   return (
-    <>
-      <h2 className="animate-pulse w-full h-5 mb-2" />
+    <div className="p-4">
+      <h2 className="animate-pulse w-full h-5 mb-2 bg-navy" />
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/3">
           <span className="animate-pulse w-full h-[1000px] bg-navy" />
@@ -18,9 +18,9 @@ export default function Loading() {
           {mockUpLoadingText.map((line) => (
             <p className={line.className} key={line.key} />
           ))}
-          <span className="animate-pulse h-[1000px]" />
+          <span className="animate-pulse h-[1000px] bg-navy" />
         </div>
       </div>
-    </>
+    </div>
   );
 }

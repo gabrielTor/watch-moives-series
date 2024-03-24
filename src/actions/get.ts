@@ -17,7 +17,7 @@ export async function getSeries(
   page: string = "1"
 ): Promise<MovieDbResponse | undefined> {
   try {
-    const series = await api.get(`/discover/tv?page=${page}`);
+    const series = await api.get(`/tv/popular?page=${page}`);
     return series.data;
   } catch (error) {
     console.log(error);
