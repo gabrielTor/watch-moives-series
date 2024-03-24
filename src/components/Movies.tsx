@@ -24,14 +24,16 @@ export default function Movies({ movies }: Props) {
         >
           <Image
             //@ts-ignore
-            src={getSrc(movie.poster_path)}
-            alt={movie.title}
+            src={getSrc(movie.poster_path || movie.backdrop_path)}
+            alt={movie?.title || movie?.name}
             className="w-full h-48 object-cover"
             width={800}
             height={800}
           />
           <div className="p-4">
-            <h2 className="text-xl font-bold mb-2 truncate">{movie.title}</h2>
+            <h2 className="text-xl font-bold mb-2 truncate">
+              {movie?.title || movie?.name}
+            </h2>
             <p className="text-gray-700 overflow-hidden max-h-24">
               {truncateText(movie.overview)}
             </p>

@@ -23,10 +23,11 @@ interface MovieResults {
   overview: string;
   poster_path: string;
   release_date: string;
-  title: string;
   vote_average: number; //float
   vote_count: number;
   popularity: number; //float
+  name: string;
+  title?: string;
 }
 
 interface MovieDbResponse {
@@ -106,30 +107,6 @@ interface MovieData {
   vote_average: number;
   vote_count: number;
   videos: { results: VideoResult[] };
-}
-
-interface TvResults {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  origin_country: string[];
-  original_language: string;
-  original_name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  first_air_date: string;
-  name: string;
-  vote_average: number;
-  vote_count: number;
-}
-
-interface TvDbResponse {
-  page: number;
-  results: TvResults[];
-  total_pages: number;
-  total_results: number;
 }
 
 interface AuthorDetails {

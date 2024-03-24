@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 interface Props {
   amountOfPages: number;
@@ -14,6 +14,7 @@ export default function PageNumbers({
 }: Readonly<Props>) {
   const { push } = useRouter();
   const { get } = useSearchParams();
+  const pathname = usePathname();
   if (!amountOfPages) return null;
 
   const startPage = Math.max(1, currentPage - halfMaxVisiblePages);
@@ -22,9 +23,9 @@ export default function PageNumbers({
   const navigateToPage = (pageNumber: number) => {
     const search = get("search");
     const type = get("type");
-    if (search) return push(`/results?page=${pageNumber}&search=${search}`);
-    else if (type) return push(`/?page=${pageNumber}&type=${type}`);
-    push(`/?page=${pageNumber}`);
+    if (search) return push(`${pathname}?page=${pageNumber}&search=${search}`);
+    else if (type) return push(`${pathname}?page=${pageNumber}&type=${type}`);
+    push(`${pathname}?page=${pageNumber}`);
   };
 
   const nextPage = () => {

@@ -1,6 +1,6 @@
 import { getSeries } from "@/actions/get";
 import PageNumbers from "@/components/PageNumbers";
-import Series from "./_components/Series";
+import Movies from "@/components/Movies";
 
 interface Props {
   searchParams: { page: string };
@@ -11,7 +11,7 @@ export default async function page({ searchParams }: Readonly<Props>) {
 
   return (
     <section className="p-4 max-w-7xl mx-auto">
-      <Series shows={tv?.results} />
+      <Movies movies={tv?.results} />
       <PageNumbers amountOfPages={tv!.total_pages} currentPage={tv!.page} />
     </section>
   );
