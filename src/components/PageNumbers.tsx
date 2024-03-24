@@ -8,7 +8,10 @@ interface Props {
 const maxVisiblePages = 5;
 const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
 
-export default function PageNumbers({ amountOfPages, currentPage }: Props) {
+export default function PageNumbers({
+  amountOfPages,
+  currentPage,
+}: Readonly<Props>) {
   const { push } = useRouter();
   const { get } = useSearchParams();
   if (!amountOfPages) return null;
@@ -18,7 +21,9 @@ export default function PageNumbers({ amountOfPages, currentPage }: Props) {
 
   const navigateToPage = (pageNumber: number) => {
     const search = get("search");
+    const type = get("type");
     if (search) return push(`/results?page=${pageNumber}&search=${search}`);
+    else if (type) return push(`/?page=${pageNumber}&type=${type}`);
     push(`/?page=${pageNumber}`);
   };
 
@@ -34,11 +39,11 @@ export default function PageNumbers({ amountOfPages, currentPage }: Props) {
   };
 
   return (
-    <span className="flex lg:gap-2 justify-center text-sm lg:text-lg font-medium mt-4">
+    <span className="flex lg:gap-2 justify-center text-lg font-medium mt-4">
       <button
         onClick={prevPage}
         aria-label="previous"
-        className="rounded-full px-3 py-1 lg:px-5 lg:py-2 hover:bg-aqua"
+        className="rounded-full px-4 py-1 lg:px-5 lg:py-2 hover:bg-aqua"
       >
         &lt;
       </button>
@@ -51,7 +56,7 @@ export default function PageNumbers({ amountOfPages, currentPage }: Props) {
             currentPage === startPage + index
               ? "bg-navy text-white"
               : "hover:bg-aqua"
-          } rounded-full px-3 py-1 lg:px-5 lg:py-2`}
+          } rounded-full px-4 py-1 lg:px-5 lg:py-2`}
         >
           {startPage + index}
         </button>
@@ -59,7 +64,7 @@ export default function PageNumbers({ amountOfPages, currentPage }: Props) {
       <button
         onClick={nextPage}
         aria-label="next"
-        className="rounded-full px-3 py-1 lg:px-5 lg:py-2 hover:bg-aqua"
+        className="rounded-full px-4 py-1 lg:px-5 lg:py-2 hover:bg-aqua"
       >
         &gt;
       </button>

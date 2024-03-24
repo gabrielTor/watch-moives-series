@@ -3,11 +3,11 @@ import Movies from "@/components/Movies";
 import PageNumbers from "@/components/PageNumbers";
 
 interface Props {
-  searchParams: { page: string };
+  searchParams: { page: string; type: string };
 }
 
 export default async function Home({ searchParams }: Readonly<Props>) {
-  const movies = await getMovies(searchParams.page);
+  const movies = await getMovies(searchParams.page, searchParams.type);
 
   return (
     <section className="p-4 max-w-7xl mx-auto">

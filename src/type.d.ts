@@ -107,3 +107,44 @@ interface MovieData {
   vote_count: number;
   videos: { results: VideoResult[] };
 }
+
+interface TvResults {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  first_air_date: string;
+  name: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+interface TvDbResponse {
+  page: number;
+  results: TvResults[];
+  total_pages: number;
+  total_results: number;
+}
+
+interface AuthorDetails {
+  name: string;
+  username: string;
+  avatar_path: string;
+  rating: number;
+}
+
+interface Review {
+  author: string;
+  author_details: AuthorDetails;
+  content: string;
+  created_at: string;
+  id: string;
+  updated_at: string;
+  url: string;
+}
