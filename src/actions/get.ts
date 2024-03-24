@@ -24,9 +24,13 @@ export async function getSeries(
   }
 }
 
-export async function getMovieById(id: string): Promise<MovieData | undefined> {
+export async function getMovieById(
+  id: string,
+  isSeries?: boolean
+): Promise<MovieData | undefined> {
+  const path = isSeries ? "tv" : "movie";
   try {
-    const movie = await api.get(`/movie/${id}?append_to_response=videos`);
+    const movie = await api.get(`/${path}/${id}?append_to_response=videos`);
     return movie.data;
   } catch (error) {
     console.log(error);

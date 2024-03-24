@@ -1,11 +1,14 @@
 const VideoPlayer = ({
   imdb_id,
   title,
+  isSeries,
 }: {
   imdb_id: number;
   title?: string;
+  isSeries?: boolean;
 }) => {
-  const embedUrl = `https://vidsrc.to/embed/movie/${imdb_id}`;
+  const path = isSeries ? "tv" : "movie";
+  const embedUrl = `https://vidsrc.to/embed/${path}/${imdb_id}`;
 
   return (
     <iframe

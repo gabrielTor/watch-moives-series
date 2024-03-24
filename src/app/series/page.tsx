@@ -11,7 +11,7 @@ export default async function page({ searchParams }: Readonly<Props>) {
 
   return (
     <section className="p-4 max-w-7xl mx-auto">
-      <Movies movies={tv?.results} />
+      <Movies movies={tv?.results} path="series" />
       <PageNumbers amountOfPages={tv!.total_pages} currentPage={tv!.page} />
     </section>
   );

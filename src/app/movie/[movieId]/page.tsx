@@ -19,7 +19,7 @@ export default async function page({ params }: Props) {
         <div className="w-full lg:w-1/3">
           <Image
             //@ts-ignore
-            src={getSrc(movie?.poster_path)}
+            src={getSrc(movie?.poster_path || movie?.backdrop_path)}
             alt={movie?.title as string}
             className="rounded-lg mb-4 w-full"
             width={5000}
@@ -45,7 +45,11 @@ export default async function page({ params }: Props) {
           </p>
           <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
         </div>
-        <h3 className="text-xl font-semibold">Trailers & Shorts</h3>
+        {movie?.videos?.results?.length ? (
+          <h3 className="text-xl font-semibold">Trailers & Shorts</h3>
+        ) : (
+          <></>
+        )}
         <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full">
           {movie?.videos?.results.map((video) => (
             <YoutubeTrailer trailerId={video.key} key={video.id} />

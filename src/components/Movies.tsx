@@ -4,6 +4,7 @@ import Link from "next/link";
 
 interface Props {
   movies?: MovieResults[];
+  path?: string;
 }
 
 const truncateText = (text: string) => {
@@ -13,12 +14,12 @@ const truncateText = (text: string) => {
   return text;
 };
 
-export default function Movies({ movies }: Props) {
+export default function Movies({ movies, path = "movie" }: Props) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {movies?.map((movie) => (
         <Link
-          href={`/movie/${movie.id}`}
+          href={`/${path}/${movie.id}`}
           key={movie.id}
           className="group bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-gray-100"
         >
