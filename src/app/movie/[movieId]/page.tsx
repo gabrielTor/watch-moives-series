@@ -46,6 +46,7 @@ export default async function page({ params }: Props) {
             className="rounded-lg mb-4 w-full"
             width={5000}
             height={5000}
+            loading="lazy"
           />
         </div>
         <div className="w-full lg:w-2/3 lg:pl-4 flex flex-col">

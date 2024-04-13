@@ -21,6 +21,7 @@ export default async function page({ params }: Props) {
             className="rounded-lg mb-4 w-full"
             width={5000}
             height={5000}
+            loading="lazy"
           />
         </div>
         <div className="w-full md:w-2/3 md:pl-4">

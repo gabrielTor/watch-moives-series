@@ -14,7 +14,7 @@ const truncateText = (text: string) => {
   return text;
 };
 
-export default function Movies({ movies, path = "movie" }: Props) {
+export default function Movies({ movies, path = "movie" }: Readonly<Props>) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {movies?.map((movie) => (
@@ -26,14 +26,15 @@ export default function Movies({ movies, path = "movie" }: Props) {
           <Image
             //@ts-ignore
             src={getSrc(movie.poster_path || movie.backdrop_path)}
-            alt={movie?.title || movie?.name}
+            alt={movie?.title ?? movie?.name}
             className="w-full h-48 object-cover"
             width={800}
             height={800}
+            loading="lazy"
           />
           <div className="p-4">
             <h2 className="text-xl font-bold mb-2 truncate">
-              {movie?.title || movie?.name}
+              {movie?.title ?? movie?.name}
             </h2>
             <p className="text-gray-700 overflow-hidden max-h-24">
               {truncateText(movie.overview)}
