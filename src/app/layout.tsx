@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: "Watch Free Movies, series, anime",
   openGraph: {
     images: LOGO,
+    type: "website",
+    url: process.env.NEXT_PUBLIC_URL,
   },
 };
 
