@@ -9,7 +9,7 @@ const mockUpLoadingText = [
 export default function Loading() {
   return (
     <div className="p-4">
-      <h2 className="animate-pulse w-full h-5 mb-2 bg-navy" />
+      <span className="animate-pulse w-full h-5 mb-2 bg-navy" />
       <div className="flex flex-wrap">
         <div className="w-full md:w-1/3">
           <span className="animate-pulse w-full h-[1000px] bg-navy" />
