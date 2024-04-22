@@ -35,8 +35,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function page({ params }: Props) {
   const movie = await getMovieById(params.movieId);
   return (
-    <div className="container mx-auto p-4 text-white">
-      <h2 className="text-3xl font-bold mb-2">{movie?.title}</h2>
+    <div className="max-w-[100rem] mx-auto p-4 text-white">
+      <h2 className="text-3xl font-bold mb-4 bg-navy rounded-lg p-4">
+        {movie?.title}
+      </h2>
       <div className="flex flex-wrap">
         <div className="w-full lg:w-1/3">
           <Image
@@ -50,30 +52,34 @@ export default async function page({ params }: Props) {
           />
         </div>
         <div className="w-full lg:w-2/3 lg:pl-4 flex flex-col">
-          <p>
-            <strong>Year:</strong> {movie?.release_date}
-          </p>
-          <p>
-            <strong>Plot Overview:</strong> {movie?.overview}
-          </p>
-          <p>
-            <strong>Duration:</strong> {movie?.runtime} min
-          </p>
-          <p>
-            <strong>Release Date:</strong> {movie?.release_date}
-          </p>
-          <p>
-            <strong>Genres:</strong>{" "}
-            {movie?.genres?.map((g) => g.name)?.join(", ")}
-          </p>
+          <article className="bg-navy rounded-lg p-4">
+            <p>
+              <strong>Year:</strong> {movie?.release_date}
+            </p>
+            <p>
+              <strong>Plot Overview:</strong> {movie?.overview}
+            </p>
+            <p>
+              <strong>Duration:</strong> {movie?.runtime} min
+            </p>
+            <p>
+              <strong>Release Date:</strong> {movie?.release_date}
+            </p>
+            <p>
+              <strong>Genres:</strong>{" "}
+              {movie?.genres?.map((g) => g.name)?.join(", ")}
+            </p>
+          </article>
           <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
         </div>
         {movie?.videos?.results?.length ? (
-          <h3 className="text-xl font-semibold">Trailers & Shorts</h3>
+          <h3 className="text-xl font-semibold bg-navy rounded-lg p-4 w-full">
+            Trailers & Shorts
+          </h3>
         ) : (
           <></>
         )}
-        <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full">
+        <div className="mt-4 grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full">
           {movie?.videos?.results.map((video) => (
             <YoutubeTrailer trailerId={video.key} key={video.id} />
           ))}

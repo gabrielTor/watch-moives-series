@@ -16,6 +16,9 @@ const config: Config = {
       screens: {
         xs: "390px",
       },
+      maxWidth: {
+        "8xl": "100rem", // Adjust the size as needed
+      },
     },
   },
   plugins: [],
