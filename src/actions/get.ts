@@ -1,5 +1,6 @@
 "use server";
 import api from "@/config/movieApi";
+import getBase64Url from "@/utils/getBase64Url";
 //movie id /reviews
 export async function getMovies(
   page: string = "1",
@@ -31,7 +32,10 @@ export async function getMovieById(
   const path = isSeries ? "tv" : "movie";
   try {
     const movie = await api.get(`/${path}/${id}?append_to_response=videos`);
-    return movie.data;
+    const blurredImage = await getBase64Url(
+      movie.data?.poster_path ?? movie.data?.backdrop_path
+    );
+    return { ...movie.data, blurredImage };
   } catch (error) {
     console.log(error);
   }

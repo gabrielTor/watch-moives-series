@@ -83,6 +83,7 @@ interface VideoResult {
 interface MovieData {
   adult: boolean;
   backdrop_path: string;
+  blurredImage: string;
   belongs_to_collection: BelongsToCollection;
   budget: number;
   genres: Genre[];
