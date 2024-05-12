@@ -4,6 +4,7 @@ import VideoPlayer from "@/components/VideoPlayer";
 import YoutubeTrailer from "@/components/YoutubeTrailer";
 import getSrc from "@/utils/getFullImgSrc";
 import Image from "next/image";
+import Information from "@/components/Information";
 
 interface Props {
   params: { movieId: string };
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Ctrl+Stream",
       images: [
         {
-          url: getSrc(movie?.poster_path ?? movie?.backdrop_path ?? ""),
+          url: getSrc(movie?.poster_path ?? movie?.backdrop_path),
           width: 1200,
           height: 630,
         },
@@ -42,7 +43,6 @@ export default async function page({ params }: Props) {
       <div className="flex flex-wrap">
         <div className="w-full lg:w-1/3">
           <Image
-            //@ts-ignore
             src={getSrc(movie?.poster_path ?? movie?.backdrop_path)}
             alt={movie?.title as string}
             className="rounded-lg mb-4 w-full"
@@ -53,24 +53,7 @@ export default async function page({ params }: Props) {
           />
         </div>
         <div className="w-full lg:w-2/3 lg:pl-4 flex flex-col">
-          <article className="bg-navy rounded-lg p-4">
-            <p>
-              <strong>Year:</strong> {movie?.release_date}
-            </p>
-            <p>
-              <strong>Plot Overview:</strong> {movie?.overview}
-            </p>
-            <p>
-              <strong>Duration:</strong> {movie?.runtime} min
-            </p>
-            <p>
-              <strong>Release Date:</strong> {movie?.release_date}
-            </p>
-            <p>
-              <strong>Genres:</strong>{" "}
-              {movie?.genres?.map((g) => g.name)?.join(", ")}
-            </p>
-          </article>
+          <Information {...movie} />
           <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
         </div>
         {movie?.videos?.results?.length ? (

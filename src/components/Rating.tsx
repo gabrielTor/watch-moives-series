@@ -13,7 +13,7 @@ export default function RatingComponent({
   popularity,
 }: Readonly<RatingComponentProps>) {
   return (
-    <div className="bg-navy text-gray-300 p-4">
+    <div className="text-gray-300 p-4">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold">Rating</h3>
         <span className="text-liteBlue text-xl font-bold">
