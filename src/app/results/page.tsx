@@ -16,7 +16,7 @@ export default async function page({ searchParams }: Props) {
 
   return (
     <section className="p-4 max-w-8xl mx-auto">
-      {!data?.results?.length && (
+      {data?.total_results === 0 && (
         <div className="grid place-items-center h-[70dvh] text-xl font-bold">
           <article>
             Sorry no movies/series found with {searchParams.search}
