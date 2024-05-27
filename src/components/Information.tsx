@@ -7,6 +7,7 @@ export default function Information({
   runtime,
   release_date,
   genres,
+  status,
 }: Readonly<Partial<MovieData>>) {
   const [hasCopied, setHasCopied] = useState<string>("");
 
@@ -27,6 +28,9 @@ export default function Information({
       </p>
       <p>
         <strong>Release Date:</strong> {release_date}
+      </p>
+      <p>
+        <strong>Status:</strong> {status}
       </p>
       <p>
         <strong>Genres:</strong> {genres?.map((g) => g.name)?.join(", ")}
