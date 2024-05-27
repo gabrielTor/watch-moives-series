@@ -41,6 +41,17 @@ export async function getMovieById(
   }
 }
 
+export async function getReviews(
+  id: string
+): Promise<ReviewsResponse | undefined> {
+  try {
+    const reviews = await api.get(`/movie/${id}/reviews`);
+    return reviews.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getSearchedMovies(
   query: string,
   page: string = "1"

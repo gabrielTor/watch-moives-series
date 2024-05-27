@@ -1,10 +1,11 @@
-import { getMovieById } from "@/actions/get";
+import { getMovieById, getReviews } from "@/actions/get";
 import { Metadata } from "next";
 import VideoPlayer from "@/components/VideoPlayer";
 import YoutubeTrailer from "@/components/YoutubeTrailer";
 import getSrc from "@/utils/getFullImgSrc";
 import Image from "next/image";
 import Information from "@/components/Information";
+import { Reviews } from "@/components/Reviews";
 
 interface Props {
   params: { movieId: string };
@@ -34,7 +35,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function page({ params }: Props) {
-  const movie = await getMovieById(params.movieId);
+  const [movie, reviews] = await Promise.all([
+    getMovieById(params.movieId),
+    getReviews(params.movieId),
+  ]);
   return (
     <div className="max-w-[100rem] mx-auto p-4 text-white">
       <h2 className="text-3xl font-bold mb-4 bg-navy rounded-lg p-4">
@@ -56,6 +60,7 @@ export default async function page({ params }: Props) {
           <Information {...movie} />
           <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
         </div>
+        <Reviews {...reviews!} />
         {movie?.videos?.results?.length ? (
           <h3 className="text-xl font-semibold bg-navy rounded-lg p-4 w-full">
             Trailers & Shorts
