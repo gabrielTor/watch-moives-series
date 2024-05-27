@@ -20,7 +20,7 @@ export const Reviews = ({ results }: ReviewsResponse) => {
                 />
               ) : (
                 <p className="w-full h-full rounded-full grid place-items-center bg-aqua capitalize">
-                  {review.author_details.name[0]}
+                  {review.author_details.username[0]}
                 </p>
               )}
             </div>
