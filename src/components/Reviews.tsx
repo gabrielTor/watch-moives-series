@@ -7,7 +7,7 @@ export const Reviews = ({ results }: ReviewsResponse) => {
     <section className="max-w-8xl mx-auto text-white grid gap-4 mb-4">
       <h2 className="text-3xl font-bold bg-navy rounded-lg p-4">Reviews</h2>
       {results?.map((review) => (
-        <div key={review.id} className="bg-navy rounded-xl p-4">
+        <div key={review.id} className="bg-navy rounded-xl p-4 w-full">
           <div className="flex items-center mb-2">
             <div className="w-10 h-10 rounded-full flex-shrink-0">
               {review.author_details.avatar_path ? (

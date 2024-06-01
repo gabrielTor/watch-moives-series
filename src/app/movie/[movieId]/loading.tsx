@@ -13,7 +13,7 @@ const mockUpLoadingText = [
 
 export default function Loading() {
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-8xl">
       <div className="animate-pulse w-full md:w-1/3 h-5 mb-2 bg-navy rounded" />
       <div className="flex flex-wrap">
         <span className=" md:w-1/3 animate-pulse w-full h-[50dvh] md:h-[80dvh] bg-navy rounded" />
