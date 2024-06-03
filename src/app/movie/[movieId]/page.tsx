@@ -40,7 +40,7 @@ export default async function page({ params }: Props) {
     getReviews(params.movieId),
   ]);
   return (
-    <div className="max-w-[100rem] mx-auto p-4 text-white">
+    <div className="max-w-8xl mx-auto p-4 text-white">
       <h2 className="text-3xl font-bold mb-4 bg-navy rounded-lg p-4">
         {movie?.title}
       </h2>
