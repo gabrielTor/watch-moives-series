@@ -17,6 +17,7 @@ const VideoPlayer = ({
       src={embedUrl}
       allowFullScreen
       allow="autoplay; encrypted-media; picture-in-picture"
+      referrerpolicy="origin"
     />
   );
 };
