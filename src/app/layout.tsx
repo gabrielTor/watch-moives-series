@@ -29,7 +29,7 @@ export default function RootLayout({
         <Suspense>
           <Navbar />
         </Suspense>
-        <main className="min-h-screen bg-liteBlue">{children}</main>
+        <main className="min-h-screen bg-gray-950">{children}</main>
         <Footer />
       </body>
     </html>

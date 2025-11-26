@@ -3,19 +3,22 @@ import Movies from "@/components/Movies";
 import PageNumbers from "@/components/PageNumbers";
 
 interface Props {
-  searchParams: { page: string; type: string };
+  searchParams: { page?: string; type?: string };
 }
 
+const maxPageNumber = 500;
+
 export default async function Home({ searchParams }: Readonly<Props>) {
-  const movies = await getMovies(searchParams.page, searchParams.type);
+  const rawPage = Number(searchParams.page) || 1;
+  const page = Math.max(1, Math.min(rawPage, maxPageNumber));
+  const type = searchParams.type;
+
+  const movies = await getMovies(String(page), type);
 
   return (
     <section className="p-4 max-w-8xl mx-auto">
       <Movies movies={movies?.results} />
-      <PageNumbers
-        amountOfPages={movies!.total_pages}
-        currentPage={movies!.page}
-      />
+      <PageNumbers amountOfPages={maxPageNumber} currentPage={page} />
     </section>
   );
 }
