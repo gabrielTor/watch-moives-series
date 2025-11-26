@@ -26,8 +26,8 @@ const GlobalError = ({
 
           {/* Message */}
           <p className="text-gray-400 text-center mb-6 leading-relaxed">
-            We're experiencing technical difficulties. Our team is working hard
-            to resolve this issue. Thank you for your patience.
+            We&apos;re experiencing technical difficulties. Our team is working
+            hard to resolve this issue. Thank you for your patience.
           </p>
 
           {/* Error Details (optional, for development) */}
