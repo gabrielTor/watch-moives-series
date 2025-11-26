@@ -1,7 +1,7 @@
 "use server";
 import api from "@/config/movieApi";
 import getBase64Url from "@/utils/getBase64Url";
-//movie id /reviews
+
 export async function getMovies(
   page: string = "1",
   type: string = "popular"
@@ -25,17 +25,25 @@ export async function getSeries(
   }
 }
 
-export async function getMovieById(
-  id: string,
-  isSeries?: boolean
-): Promise<MovieData | undefined> {
-  const path = isSeries ? "tv" : "movie";
+export async function getMovieById(id: string): Promise<MovieData | undefined> {
   try {
-    const movie = await api.get(`/${path}/${id}?append_to_response=videos`);
+    const movie = await api.get(`/movie/${id}?append_to_response=videos`);
     const blurredImage = await getBase64Url(
       movie.data?.poster_path ?? movie.data?.backdrop_path
     );
     return { ...movie.data, blurredImage };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getSeriesById(id: string): Promise<TVShow | undefined> {
+  try {
+    const show = await api.get(`/tv/${id}?append_to_response=videos`);
+    const blurredImage = await getBase64Url(
+      show.data?.poster_path ?? show.data?.backdrop_path
+    );
+    return { ...show.data, blurredImage };
   } catch (error) {
     console.log(error);
   }
