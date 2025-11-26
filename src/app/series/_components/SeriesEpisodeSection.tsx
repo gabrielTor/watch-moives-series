@@ -34,7 +34,7 @@ export function SeriesEpisodeSection({
         className={`${wrapperClasses} rounded-lg overflow-hidden flex flex-col md:flex-row`}
       >
         {episode.still_path && (
-          <div className="relative w-full md:w-80 h-48">
+          <div className="relative w-full md:w-80">
             <Image
               src={`${imageBase}w500${episode.still_path}`}
               alt={episode.name}
