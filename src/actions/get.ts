@@ -73,3 +73,15 @@ export async function getSearchedMovies(
     console.log(error);
   }
 }
+
+export async function getEpisodesBySeason(
+  tvId: string,
+  seasonNumber: string
+): Promise<SeasonResponse[] | undefined> {
+  try {
+    const season = await api.get(`/tv/${tvId}/season/${seasonNumber}`);
+    return season.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

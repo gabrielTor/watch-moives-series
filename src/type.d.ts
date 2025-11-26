@@ -221,3 +221,59 @@ interface ReviewsResponse {
   total_pages: number;
   total_results: number;
 }
+
+interface SeasonResponse {
+  _id: string;
+  air_date: string | null;
+  episodes: Episode[];
+  name: string;
+  networks: Network[];
+  overview: string;
+  id: number;
+  poster_path: string | null;
+  season_number: number;
+  vote_average: number;
+}
+
+interface Episode {
+  air_date: string | null;
+  episode_number: number;
+  episode_type: string; // "standard" | "finale" (TMDB doesn't enforce enum)
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  runtime: number | null;
+  season_number: number;
+  show_id: number;
+  still_path: string | null;
+  vote_average: number;
+  vote_count: number;
+  crew: CrewMember[];
+  guest_stars: GuestStar[];
+}
+
+interface CrewMember {
+  id: number;
+  credit_id: string;
+  name: string;
+  department: string;
+  job: string;
+  profile_path: string | null;
+}
+
+interface GuestStar {
+  id: number;
+  credit_id: string;
+  name: string;
+  character: string;
+  order: number;
+  profile_path: string | null;
+}
+
+interface Network {
+  id: number;
+  logo_path: string | null;
+  name: string;
+  origin_country: string;
+}

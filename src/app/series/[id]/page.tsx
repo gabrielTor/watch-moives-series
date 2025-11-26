@@ -15,17 +15,15 @@ interface Props {
 }
 
 export const revalidate = 3600 * 24;
+const imageBase = "https://image.tmdb.org/t/p/";
 
 export default async function page({ params }: Props) {
   const tvShow = await getSeriesById(params.id);
-
-  const imageBase = "https://image.tmdb.org/t/p/";
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <SeriesHero tvShow={tvShow} imageBase={imageBase} />
 
-      {/* Content Sections */}
       <div className="max-w-7xl mx-auto px-8 py-12 space-y-12">
         <SeriesOverview overview={tvShow?.overview} />
         <SeriesDetailsGrid tvShow={tvShow} />
@@ -41,7 +39,11 @@ export default async function page({ params }: Props) {
           imageBase={imageBase}
           variant="gradient"
         />
-        <SeriesSeasons seasons={tvShow?.seasons} imageBase={imageBase} />
+        <SeriesSeasons
+          seasons={tvShow?.seasons}
+          imageBase={imageBase}
+          id={params.id}
+        />
         <SeriesNetworks networks={tvShow?.networks} imageBase={imageBase} />
         <SeriesProductionCompanies
           companies={tvShow?.production_companies}

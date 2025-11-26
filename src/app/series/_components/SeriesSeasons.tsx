@@ -1,12 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaPlay } from "react-icons/fa";
 
 interface SeriesSeasonsProps {
   seasons?: Season[];
   imageBase: string;
+  id: string;
 }
 
-export function SeriesSeasons({ seasons, imageBase }: SeriesSeasonsProps) {
+export function SeriesSeasons({ seasons, imageBase, id }: SeriesSeasonsProps) {
   if (!seasons || seasons.length === 0) {
     return null;
   }
@@ -16,9 +18,10 @@ export function SeriesSeasons({ seasons, imageBase }: SeriesSeasonsProps) {
       <h2 className="text-3xl font-bold mb-6">Seasons</h2>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {seasons.map((season) => (
-          <div
+          <Link
+            href={`/series/${id}/season/${season.season_number}`}
             key={season.id}
-            className="bg-gray-900 rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all cursor-pointer"
+            className="bg-gray-900 rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
           >
             {season.poster_path ? (
               <div className="relative w-full h-80">
@@ -45,7 +48,7 @@ export function SeriesSeasons({ seasons, imageBase }: SeriesSeasonsProps) {
                 </p>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
