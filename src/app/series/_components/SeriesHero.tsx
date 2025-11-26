@@ -33,7 +33,7 @@ export function SeriesHero({ tvShow, imageBase }: SeriesHeroProps) {
       )}
 
       <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+        <div className="max-w-8xl mx-auto flex flex-col md:flex-row gap-8">
           {posterUrl && (
             <div className="flex-shrink-0">
               <div className="relative w-48 h-72 rounded-lg overflow-hidden shadow-2xl">

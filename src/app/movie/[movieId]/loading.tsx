@@ -6,7 +6,7 @@ export default function Loading() {
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-800 to-gray-700 animate-pulse" />
 
         <div className="absolute bottom-0 left-0 right-0 p-6">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-8xl mx-auto">
             {/* Title skeleton */}
             <div className="h-10 w-2/3 bg-navy rounded mb-3 animate-pulse" />
             {/* Tagline skeleton */}
@@ -30,7 +30,7 @@ export default function Loading() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pb-8">
+      <div className="max-w-8xl mx-auto px-4 pb-8">
         <div className="flex flex-wrap gap-6">
           {/* Left Column - Poster Skeleton */}
           <div className="w-full lg:w-1/3">

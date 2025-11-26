@@ -1,11 +1,11 @@
 interface VideoPlayerType {
-  imdb_id: number;
+  imdb_id: number | string;
   title?: string;
 }
 
 interface SeriesPlayer extends VideoPlayerType {
-  episode: number;
-  season: number;
+  episode?: number | string;
+  season: number | string;
 }
 
 export const VideoPlayer = ({ imdb_id, title }: VideoPlayerType) => {
@@ -34,7 +34,7 @@ export const SeriesVideoPlayer = ({
   return (
     <iframe
       title={title}
-      className="w-full lg:flex-grow lg:h-auto h-96 rounded-lg"
+      className="w-full h-full rounded-lg"
       src={embedUrl}
       allowFullScreen
       allow="autoplay; encrypted-media; picture-in-picture"

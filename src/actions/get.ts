@@ -77,7 +77,7 @@ export async function getSearchedMovies(
 export async function getEpisodesBySeason(
   tvId: string,
   seasonNumber: string
-): Promise<SeasonResponse[] | undefined> {
+): Promise<SeasonResponse | undefined> {
   try {
     const season = await api.get(`/tv/${tvId}/season/${seasonNumber}`);
     return season.data;

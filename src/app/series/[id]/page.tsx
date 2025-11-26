@@ -24,7 +24,7 @@ export default async function page({ params }: Props) {
     <div className="min-h-screen bg-gray-950 text-white">
       <SeriesHero tvShow={tvShow} imageBase={imageBase} />
 
-      <div className="max-w-7xl mx-auto px-8 py-12 space-y-12">
+      <div className="max-w-8xl mx-auto px-8 py-12 space-y-12">
         <SeriesOverview overview={tvShow?.overview} />
         <SeriesDetailsGrid tvShow={tvShow} />
         <SeriesCreators creators={tvShow?.created_by} imageBase={imageBase} />

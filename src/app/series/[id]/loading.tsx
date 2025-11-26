@@ -6,7 +6,7 @@ export default function Loading() {
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-800 to-gray-700 animate-pulse" />
 
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+          <div className="max-w-8xl mx-auto flex flex-col md:flex-row gap-8">
             {/* Poster skeleton */}
             <div className="flex-shrink-0">
               <div className="w-48 h-72 bg-navy rounded-lg animate-pulse" />
@@ -39,7 +39,7 @@ export default function Loading() {
       </div>
 
       {/* Content Sections */}
-      <div className="max-w-7xl mx-auto px-8 py-12 space-y-12">
+      <div className="max-w-8xl mx-auto px-8 py-12 space-y-12">
         {/* Overview Skeleton */}
         <section>
           <div className="h-8 w-32 bg-navy rounded mb-4 animate-pulse" />
