@@ -1,6 +1,6 @@
 import getSrc from "@/utils/getFullImgSrc";
 import Image from "next/image";
-import VideoPlayer from "@/components/VideoPlayer";
+import { VideoPlayer } from "@/components/VideoPlayer";
 import { MovieTrailers } from "@/components/YoutubeTrailer";
 import { MovieInfo } from "@/components/Information";
 import { getMovieById, getReviews } from "@/actions/get";
