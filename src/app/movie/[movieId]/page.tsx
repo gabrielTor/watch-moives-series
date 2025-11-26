@@ -1,11 +1,12 @@
-import { getMovieById, getReviews } from "@/actions/get";
-import { Metadata } from "next";
-import VideoPlayer from "@/components/VideoPlayer";
-import YoutubeTrailer from "@/components/YoutubeTrailer";
 import getSrc from "@/utils/getFullImgSrc";
 import Image from "next/image";
-import Information from "@/components/Information";
-import { Reviews } from "@/components/Reviews";
+import VideoPlayer from "@/components/VideoPlayer";
+import { MovieTrailers } from "@/components/YoutubeTrailer";
+import { MovieInfo } from "@/components/Information";
+import { getMovieById, getReviews } from "@/actions/get";
+import { MovieReviews } from "@/components/Reviews";
+import { Metadata } from "next";
+import { MovieHero } from "@/components/MovieHero";
 
 interface Props {
   params: { movieId: string };
@@ -39,40 +40,36 @@ export default async function page({ params }: Props) {
     getMovieById(params.movieId),
     getReviews(params.movieId),
   ]);
+
   return (
-    <div className="max-w-8xl mx-auto p-4 text-white">
-      <h2 className="text-3xl font-bold mb-4 bg-navy rounded-lg p-4">
-        {movie?.title}
-      </h2>
-      <div className="flex flex-wrap">
-        <div className="w-full lg:w-1/3">
-          <Image
-            src={getSrc(movie?.poster_path ?? movie?.backdrop_path)}
-            alt={movie?.title as string}
-            className="rounded-lg mb-4 w-full"
-            width={5000}
-            height={5000}
-            placeholder="blur"
-            blurDataURL={movie?.blurredImage}
-          />
+    <div className="min-h-screen bg-gray-950 text-white">
+      <MovieHero movie={movie!} />
+
+      <div className="max-w-8xl mx-auto p-4">
+        <div className="flex flex-wrap mb-6">
+          {/* Left Column - Poster */}
+          <div className="w-full lg:w-1/3">
+            <Image
+              src={getSrc(movie?.poster_path ?? movie?.backdrop_path)}
+              alt={movie?.title as string}
+              className="rounded-lg w-full"
+              width={500}
+              height={750}
+              placeholder="blur"
+              blurDataURL={movie?.blurredImage}
+            />
+          </div>
+
+          {/* Right Column - Info & Player */}
+          <div className="w-full lg:w-2/3 lg:pl-4 flex flex-col">
+            <MovieInfo movie={movie!} />
+            <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
+          </div>
         </div>
-        <div className="w-full lg:w-2/3 lg:pl-4 flex flex-col">
-          <Information {...movie} />
-          <VideoPlayer imdb_id={movie!.id} title={movie?.title} />
-        </div>
-        <Reviews {...reviews!} />
-        {movie?.videos?.results?.length ? (
-          <h3 className="text-xl font-semibold bg-navy rounded-lg p-4 w-full">
-            Trailers & Shorts
-          </h3>
-        ) : (
-          <></>
-        )}
-        <div className="mt-4 grid gap-4 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full">
-          {movie?.videos?.results.map((video) => (
-            <YoutubeTrailer trailerId={video.key} key={video.id} />
-          ))}
-        </div>
+
+        {/* Full Width Sections */}
+        <MovieReviews reviews={reviews!} />
+        <MovieTrailers videos={movie?.videos?.results ?? []} />
       </div>
     </div>
   );

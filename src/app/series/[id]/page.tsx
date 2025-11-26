@@ -7,6 +7,8 @@ interface Props {
   params: { id: string };
 }
 
+export const revalidate = 3600 * 24;
+
 export default async function page({ params }: Props) {
   const tvShow = await getSeriesById(params.id);
 
@@ -57,7 +59,7 @@ export default async function page({ params }: Props) {
               <h1 className="text-5xl font-bold mb-2">{tvShow?.name}</h1>
               {tvShow?.tagline && (
                 <p className="text-xl text-gray-300 italic mb-4">
-                  "{tvShow?.tagline}"
+                  &quot;{tvShow?.tagline}&quot;
                 </p>
               )}
 
