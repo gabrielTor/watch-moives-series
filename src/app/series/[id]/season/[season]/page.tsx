@@ -8,6 +8,9 @@ interface Props {
   params: { season: string; id: string };
   searchParams: { episode?: string };
 }
+const imageBase = "https://image.tmdb.org/t/p/";
+
+export const revalidate = 3600 * 24;
 
 export default async function page({
   params: { id, season },
@@ -25,8 +28,6 @@ export default async function page({
       </div>
     );
   }
-
-  const imageBase = "https://image.tmdb.org/t/p/";
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">

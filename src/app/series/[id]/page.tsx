@@ -9,6 +9,7 @@ import { SeriesSeasons } from "@/app/series/_components/SeriesSeasons";
 import { SeriesNetworks } from "@/app/series/_components/SeriesNetworks";
 import { SeriesProductionCompanies } from "@/app/series/_components/SeriesProductionCompanies";
 import { SeriesAdditionalInfo } from "@/app/series/_components/SeriesAdditionalInfo";
+import Link from "next/link";
 
 interface Props {
   params: { id: string };
@@ -28,11 +29,15 @@ export default async function page({ params }: Props) {
         <SeriesOverview overview={tvShow?.overview} />
         <SeriesDetailsGrid tvShow={tvShow} />
         <SeriesCreators creators={tvShow?.created_by} imageBase={imageBase} />
-        <SeriesEpisodeSection
-          title="Last Episode"
-          episode={tvShow?.last_episode_to_air}
-          imageBase={imageBase}
-        />
+        <Link
+          href={`/series/${params.id}/season/${tvShow?.last_episode_to_air?.season_number}?episode=${tvShow?.last_episode_to_air?.episode_number}`}
+        >
+          <SeriesEpisodeSection
+            title="Last Episode"
+            episode={tvShow?.last_episode_to_air}
+            imageBase={imageBase}
+          />
+        </Link>
         <SeriesEpisodeSection
           title="Next Episode"
           episode={tvShow?.next_episode_to_air}
