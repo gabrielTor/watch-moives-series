@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface Props {
@@ -8,7 +9,7 @@ export const OfficialWebsite = ({ homepageLink }: Props) => {
   if (homepageLink) {
     return (
       <section>
-        <a
+        <Link
           href={homepageLink}
           target="_blank"
           rel="noopener noreferrer"
@@ -16,7 +17,7 @@ export const OfficialWebsite = ({ homepageLink }: Props) => {
         >
           Visit Official Website
           <FaExternalLinkAlt className="w-5 h-5" />
-        </a>
+        </Link>
       </section>
     );
   }

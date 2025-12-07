@@ -74,6 +74,18 @@ export async function getSearchedMovies(
   }
 }
 
+export async function getSearchedSeries(
+  query: string,
+  page: string = "1"
+): Promise<MovieDbResponse | undefined> {
+  try {
+    const seriesQuery = await api.get(`/search/tv?page=${page}&query=${query}`);
+    return seriesQuery.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getEpisodesBySeason(
   tvId: string,
   seasonNumber: string

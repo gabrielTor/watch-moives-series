@@ -1,16 +1,21 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FormEvent, useRef } from "react";
 import { IoSearch } from "react-icons/io5";
 
 export default function Search() {
   const { push } = useRouter();
+  const pathname = usePathname();
   const searchRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchRef.current?.value) return;
-    push(`/results?search=${searchRef.current.value}`);
+    let path = `/results?search=${searchRef.current.value}`;
+    if (pathname.includes("/series")) {
+      path = "/series" + path;
+    }
+    push(path);
     searchRef.current.value = "";
   };
   return (

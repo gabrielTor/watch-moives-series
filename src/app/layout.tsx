@@ -26,9 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Suspense>
-          <Navbar />
-        </Suspense>
+        <Navbar />
         <main className="min-h-screen bg-gray-950">{children}</main>
         <Footer />
       </body>

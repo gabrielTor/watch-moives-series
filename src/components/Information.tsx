@@ -1,16 +1,17 @@
 "use client";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { FaLink } from "react-icons/fa";
 import { OfficialWebsite } from "./OfficialWebsite";
 
 export function MovieInfo({ movie }: { movie: MovieData }) {
-  const [hasCopied, setHasCopied] = useState<string>("");
+  const [hasCopied, setHasCopied] = useState<null | ReactNode>(null);
 
   const copyToClipboard = () => {
     navigator.clipboard
       .writeText(window?.location?.href)
-      .then(() => setHasCopied("Link copied!"))
+      .then(() => setHasCopied(<span>Link copied!</span>))
       .catch(console.error);
+    setTimeout(() => setHasCopied(null), 5000);
   };
 
   return (
@@ -34,10 +35,12 @@ export function MovieInfo({ movie }: { movie: MovieData }) {
       <div className="flex items-center gap-3 mt-4">
         <button
           onClick={copyToClipboard}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+          className={`inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors ${
+            hasCopied ? "px-6 py-3" : "p-4"
+          }`}
         >
           <FaLink />
-          <span>{hasCopied}</span>
+          {hasCopied}
         </button>
 
         <OfficialWebsite homepageLink={movie?.homepage} />
