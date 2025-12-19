@@ -25,7 +25,7 @@ export default function MobileNav({ openNav, onClose }: Props) {
             href={link.path}
             aria-label={link.label}
             onClick={onClose}
-            className="text-gray-300 hover:bg-aqua hover:text-white px-3 py-2 rounded-md font-medium"
+            className="text-gray-300 hover:text-white hover:bg-white/10 transition-colors px-3 py-2 rounded-md font-medium"
           >
             {link.label}
           </Link>
