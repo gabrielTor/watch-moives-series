@@ -1,6 +1,10 @@
-import { getSearchedSeries } from "@/actions/get";
 import Movies from "@/components/Movies";
-import PageNumbers from "@/components/PageNumbers";
+import dynamic from "next/dynamic";
+import { getSearchedSeries } from "@/actions/get";
+
+const PageNumbers = dynamic(() => import("@/components/PageNumbers"), {
+  ssr: false,
+});
 
 interface Props {
   searchParams: {

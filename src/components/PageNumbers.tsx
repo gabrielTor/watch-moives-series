@@ -6,8 +6,6 @@ interface Props {
   amountOfPages: number;
   currentPage: number;
 }
-const maxVisiblePages = 5;
-const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
 
 export default function PageNumbers({
   amountOfPages,
@@ -17,6 +15,10 @@ export default function PageNumbers({
   const { get } = useSearchParams();
   const pathname = usePathname();
   if (!amountOfPages) return null;
+
+  const maxVisiblePages =
+    typeof window !== "undefined" && window.innerWidth < 640 ? 3 : 5;
+  const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
 
   const startPage = Math.max(1, currentPage - halfMaxVisiblePages);
   const endPage = Math.min(startPage + maxVisiblePages - 1, amountOfPages);
@@ -47,15 +49,7 @@ export default function PageNumbers({
         onClick={prevPage}
         disabled={currentPage === 1}
         aria-label="previous page"
-        className={`
-          flex items-center justify-center w-10 h-10 rounded-lg
-          transition-all duration-200
-          ${
-            currentPage === 1
-              ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-              : "bg-gray-800 text-white hover:bg-gray-700 hover:scale-105"
-          }
-        `}
+        className={getPrevBtnClass(currentPage)}
       >
         <FaChevronLeft className="text-sm" />
       </button>
@@ -66,15 +60,11 @@ export default function PageNumbers({
           <button
             onClick={() => navigateToPage(1)}
             aria-label="page 1"
-            className="flex items-center justify-center min-w-10 h-10 px-3 rounded-lg bg-gray-800 text-white hover:bg-gray-700 hover:scale-105 transition-all duration-200"
+            className={getPageButtonClass(false)}
           >
             1
           </button>
-          {startPage > 2 && (
-            <span className="flex items-center justify-center w-10 h-10 text-gray-500">
-              ...
-            </span>
-          )}
+          {startPage > 2 && <span className={getEllipsisClass()}>...</span>}
         </>
       )}
 
@@ -89,15 +79,7 @@ export default function PageNumbers({
             key={pageNum}
             aria-label={`page ${pageNum}`}
             aria-current={isActive ? "page" : undefined}
-            className={`
-              flex items-center justify-center min-w-10 h-10 px-3 rounded-lg
-              font-semibold transition-all duration-200
-              ${
-                isActive
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/50 scale-110"
-                  : "bg-gray-800 text-white hover:bg-gray-700 hover:scale-105"
-              }
-            `}
+            className={getPageButtonClass(isActive)}
           >
             {pageNum}
           </button>
@@ -108,14 +90,12 @@ export default function PageNumbers({
       {endPage < amountOfPages && (
         <>
           {endPage < amountOfPages - 1 && (
-            <span className="flex items-center justify-center w-10 h-10 text-gray-500">
-              ...
-            </span>
+            <span className={getEllipsisClass()}>...</span>
           )}
           <button
             onClick={() => navigateToPage(amountOfPages)}
             aria-label={`page ${amountOfPages}`}
-            className="flex items-center justify-center min-w-10 h-10 px-3 rounded-lg bg-gray-800 text-white hover:bg-gray-700 hover:scale-105 transition-all duration-200"
+            className={getPageButtonClass(false)}
           >
             {amountOfPages}
           </button>
@@ -127,15 +107,7 @@ export default function PageNumbers({
         onClick={nextPage}
         disabled={currentPage === amountOfPages}
         aria-label="next page"
-        className={`
-          flex items-center justify-center w-10 h-10 rounded-lg
-          transition-all duration-200
-          ${
-            currentPage === amountOfPages
-              ? "bg-gray-800 text-gray-600 cursor-not-allowed"
-              : "bg-gray-800 text-white hover:bg-gray-700 hover:scale-105"
-          }
-        `}
+        className={getNextBtnClass(currentPage, amountOfPages)}
       >
         <FaChevronRight className="text-sm" />
       </button>
@@ -148,3 +120,43 @@ export default function PageNumbers({
     </div>
   );
 }
+
+const getPrevBtnClass = (currentPage: number) => {
+  return `
+    flex items-center justify-center w-10 h-10 rounded-lg
+    transition-all duration-200
+    ${
+      currentPage === 1
+        ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+        : "bg-gray-800 text-white hover:bg-gray-700 hover:scale-105"
+    }
+  `;
+};
+
+const getNextBtnClass = (currentPage: number, amountOfPages: number) => {
+  return `
+    flex items-center justify-center w-10 h-10 rounded-lg
+    transition-all duration-200
+    ${
+      currentPage === amountOfPages
+        ? "bg-gray-800 text-gray-600 cursor-not-allowed"
+        : "bg-gray-800 text-white hover:bg-gray-700 hover:scale-105"
+    }
+  `;
+};
+
+const getPageButtonClass = (isActive: boolean) => {
+  return `
+    flex items-center justify-center min-w-10 h-10 px-3 rounded-lg
+    font-semibold transition-all duration-200
+    ${
+      isActive
+        ? "bg-blue-600 text-white shadow-lg shadow-blue-600/50 scale-110"
+        : "bg-gray-800 text-white hover:bg-gray-700 hover:scale-105"
+    }
+  `;
+};
+
+const getEllipsisClass = () => {
+  return "flex items-center justify-center w-10 h-10 text-gray-500";
+};

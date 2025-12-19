@@ -1,7 +1,11 @@
 import Movies from "@/components/Movies";
-import PageNumbers from "@/components/PageNumbers";
+import dynamic from "next/dynamic";
 import { getMovies } from "@/actions/get";
 import { getValidPage, maxPageNumber } from "@/utils/getValidPage";
+
+const PageNumbers = dynamic(() => import("@/components/PageNumbers"), {
+  ssr: false,
+});
 
 interface Props {
   searchParams: { page?: string; type?: string };

@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import MovieDBLogo from "./MovieDBLogo";
 import Search from "./Search";
@@ -12,45 +13,56 @@ export const navLinks = [
   { path: "/?type=upcoming", label: "Upcoming Movies" },
   { path: "/?type=top_rated", label: "Top Rated Movies" },
   { path: "/series", label: "Series" },
-  // { path: "/?type=anime", label: "Anime" },
 ];
 
 const Navbar = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useClickOutside(setMobileMenuOpen);
 
   const toggleMenu = () => setMobileMenuOpen((prev) => !prev);
 
   return (
-    <nav className="bg-navy shadow-2xl sticky top-0 z-10 nav-open">
+    <nav className="sticky top-0 z-50 bg-navy/90 backdrop-blur border-b border-white/10">
       <div className="max-w-8xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex">
-            <div className="flex-shrink-0 lg:flex items-center hidden">
+        <div className="flex h-20 items-center justify-between">
+          {/* Left */}
+          <div className="flex items-center gap-6">
+            {/* Logo */}
+            <div className="hidden lg:flex items-center">
               <MovieDBLogo />
             </div>
+
+            {/* Mobile menu button */}
             <button
-              aria-label="meun"
+              aria-label="Open menu"
               onClick={toggleMenu}
-              className="flex items-center lg:hidden"
+              className="lg:hidden p-2 rounded-md text-gray-300 hover:text-white hover:bg-white/10 transition"
             >
-              <HiMenuAlt2 className="text-white text-4xl xs:text-5xl" />
+              <HiMenuAlt2 className="text-3xl" />
             </button>
-            <span className="hidden sm:ml-6 lg:flex my-auto">
+
+            {/* Desktop nav */}
+            <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   href={link.path}
-                  aria-label={link.label}
-                  className="text-gray-300 hover:bg-aqua hover:text-white px-3 py-2 rounded-md font-medium"
+                  className="px-4 py-2 rounded-md text-sm font-medium text-gray-300
+                             hover:text-white hover:bg-white/10
+                             transition-colors"
                 >
                   {link.label}
                 </Link>
               ))}
-            </span>
+            </div>
+
             <MobileNav openNav={mobileMenuOpen} onClose={toggleMenu} />
           </div>
-          <Search />
+
+          {/* Right */}
+          <div className="flex items-center">
+            <Search />
+          </div>
         </div>
       </div>
     </nav>
