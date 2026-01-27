@@ -11,8 +11,7 @@ export const navLinks = [
   { path: "/", label: "Home" },
   { path: "/?type=upcoming", label: "Upcoming Movies" },
   { path: "/?type=top_rated", label: "Top Rated Movies" },
-  { path: "/series", label: "Series" },
-  // { path: "/?type=anime", label: "Anime" },
+  { path: "/series", label: "TV Shows" },
 ];
 
 const Navbar = () => {
