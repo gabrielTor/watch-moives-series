@@ -1,3 +1,6 @@
+"use client";
+import { useActiveLink } from "@/context/ActiveLinkContext";
+
 interface VideoPlayerType {
   imdb_id: number | string;
   title?: string;
@@ -9,7 +12,8 @@ interface SeriesPlayer extends VideoPlayerType {
 }
 
 export const VideoPlayer = ({ imdb_id, title }: VideoPlayerType) => {
-  const embedUrl = `https://vidsrc.xyz/embed/movie/${imdb_id}`;
+  const { activeLink } = useActiveLink();
+  const embedUrl = `${activeLink}/embed/movie/${imdb_id}`;
 
   return (
     <iframe
@@ -29,7 +33,8 @@ export const SeriesVideoPlayer = ({
   episode = 1,
   season = 1,
 }: SeriesPlayer) => {
-  const embedUrl = `https://vidsrc-embed.ru/embed/tv?tmdb=${imdb_id}&season=${season}&episode=${episode}`;
+  const { activeLink } = useActiveLink();
+  const embedUrl = `${activeLink}/embed/tv?tmdb=${imdb_id}&season=${season}&episode=${episode}`;
 
   return (
     <iframe

@@ -1,5 +1,6 @@
 "use server";
 import connectDB from "@/config/db";
+import AdminModel from "@/models/admin";
 import MovieModel from "@/models/movie";
 import axios from "axios";
 
@@ -31,7 +32,7 @@ export async function getMovieDetails() {
     for (let i = 0; i < movies.length; i++) {
       const id = movies[i].title_id;
       const response = await api.get(
-        `/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`
+        `/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`,
       );
       movies[i].plot_overview = response.data.plot_overview;
       movies[i].runtime_minutes = response.data.runtime_minutes;
@@ -74,5 +75,22 @@ export async function getMovieById(id: string): Promise<Movie | undefined> {
     return movie as Movie;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function adminLoginAction(
+  email: string,
+  pass: string,
+): Promise<boolean> {
+  try {
+    await connectDB();
+    const adminUser = await AdminModel.findOne({ email }).lean();
+    if (pass === adminUser?.password) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 }

@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import { Suspense } from "react";
 import Footer from "@/components/Footer";
 import { LOGO } from "@/utils/getFullImgSrc";
+import { ActiveLinkProvider } from "@/context/ActiveLinkContext";
+import { getActiveLink } from "@/_actions/videoActions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,17 +20,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const link = await getActiveLink();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <main className="min-h-screen bg-gray-950">{children}</main>
-        <Footer />
+        <ActiveLinkProvider link={link}>
+          <Navbar />
+          <main className="min-h-screen bg-gray-950">{children}</main>
+          <Footer />
+        </ActiveLinkProvider>
       </body>
     </html>
   );
