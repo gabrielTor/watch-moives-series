@@ -1,5 +1,6 @@
 "use client";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface Props {
@@ -14,10 +15,17 @@ export default function PageNumbers({
   const { push } = useRouter();
   const { get } = useSearchParams();
   const pathname = usePathname();
+  const [maxVisiblePages, setMaxVisiblePages] = useState(5);
+
+  useEffect(() => {
+    const update = () => setMaxVisiblePages(window.innerWidth < 640 ? 3 : 5);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   if (!amountOfPages) return null;
 
-  const maxVisiblePages =
-    typeof window !== "undefined" && window.innerWidth < 640 ? 3 : 5;
   const halfMaxVisiblePages = Math.floor(maxVisiblePages / 2);
 
   const startPage = Math.max(1, currentPage - halfMaxVisiblePages);

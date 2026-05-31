@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  swcMinify: true,
-  cacheMaxMemorySize: 10 * 1024 * 1024, // 10MB
+cacheMaxMemorySize: 10 * 1024 * 1024, // 10MB
   images: {
     unoptimized: true,
     remotePatterns: [

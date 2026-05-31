@@ -1,32 +1,41 @@
 import { getSearchedMovies } from "@/actions/get";
 import Movies from "@/components/Movies";
+import SearchResultsHeader from "@/components/SearchResultsHeader";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-const PageNumbers = dynamic(() => import("@/components/PageNumbers"), {
-  ssr: false,
-});
+const PageNumbers = dynamic(() => import("@/components/PageNumbers"));
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     search: string;
     page: string;
-  };
+  }>;
 }
 
-export const revalidate = 3600 * 24;
+export const revalidate = 86400;
 
 export default async function page({ searchParams }: Props) {
-  const data = await getSearchedMovies(searchParams.search, searchParams.page);
+  const { search, page } = await searchParams;
+  const data = await getSearchedMovies(search, page);
 
   return (
-    <section className="p-4 max-w-8xl mx-auto">
-      {data?.total_results === 0 && (
-        <div className="grid place-items-center h-[70dvh] text-xl font-bold">
-          <article>Sorry no movies found with {searchParams.search}</article>
-        </div>
+    <section className="p-4 md:p-6 max-w-8xl mx-auto">
+      <SearchResultsHeader
+        query={search}
+        totalResults={data?.total_results ?? 0}
+      />
+      {(data?.total_results ?? 0) > 0 && (
+        <>
+          <Movies movies={data?.results} />
+          <Suspense>
+            <PageNumbers
+              amountOfPages={data!.total_pages}
+              currentPage={data!.page}
+            />
+          </Suspense>
+        </>
       )}
-      <Movies movies={data?.results} />
-      <PageNumbers amountOfPages={data!.total_pages} currentPage={data!.page} />
     </section>
   );
 }

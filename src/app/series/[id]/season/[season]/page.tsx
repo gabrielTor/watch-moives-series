@@ -5,22 +5,19 @@ import { SeriesVideoPlayer } from "@/components/VideoPlayer";
 import { EpisodeCard } from "./_components/EpisodeCard";
 
 interface Props {
-  params: { season: string; id: string };
-  searchParams: { episode?: string };
+  params: Promise<{ season: string; id: string }>;
+  searchParams: Promise<{ episode?: string }>;
 }
 
 const imageBase = "https://image.tmdb.org/t/p/";
 
-export const revalidate = 3600 * 24;
+export const revalidate = 86400;
 
-export default async function page({
-  params: { id, season },
-  searchParams,
-}: Props) {
+export default async function page({ params, searchParams }: Props) {
+  const { id, season } = await params;
+  const { episode } = await searchParams;
   const seasonData = await getEpisodesBySeason(id, season);
-  const currentEpisode = searchParams.episode
-    ? parseInt(searchParams.episode)
-    : 1;
+  const currentEpisode = episode ? parseInt(episode) : 1;
 
   if (!seasonData) {
     return (

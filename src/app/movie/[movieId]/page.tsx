@@ -9,13 +9,14 @@ import { Metadata } from "next";
 import { MovieHero } from "@/components/MovieHero";
 
 interface Props {
-  params: { movieId: string };
+  params: Promise<{ movieId: string }>;
 }
 
-export const revalidate = 3600 * 24;
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const movie = await getMovieById(params.movieId);
+  const { movieId } = await params;
+  const movie = await getMovieById(movieId);
 
   return {
     openGraph: {
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       ],
       type: "website",
-      url: `${process.env.NEXT_PUBLIC_URL}/movie/${params.movieId}`,
+      url: `${process.env.NEXT_PUBLIC_URL}/movie/${movieId}`,
       title: movie?.original_title,
       description: movie?.overview,
     },
@@ -36,9 +37,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function page({ params }: Props) {
+  const { movieId } = await params;
   const [movie, reviews] = await Promise.all([
-    getMovieById(params.movieId),
-    getReviews(params.movieId),
+    getMovieById(movieId),
+    getReviews(movieId),
   ]);
 
   return (

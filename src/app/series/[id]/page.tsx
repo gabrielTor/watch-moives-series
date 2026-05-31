@@ -12,14 +12,15 @@ import { SeriesAdditionalInfo } from "@/app/series/_components/SeriesAdditionalI
 import Link from "next/link";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export const revalidate = 3600 * 24;
+export const revalidate = 86400;
 const imageBase = "https://image.tmdb.org/t/p/";
 
 export default async function page({ params }: Props) {
-  const tvShow = await getSeriesById(params.id);
+  const { id } = await params;
+  const tvShow = await getSeriesById(id);
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
@@ -30,7 +31,7 @@ export default async function page({ params }: Props) {
         <SeriesDetailsGrid tvShow={tvShow} />
         <SeriesCreators creators={tvShow?.created_by} imageBase={imageBase} />
         <Link
-          href={`/series/${params.id}/season/${tvShow?.last_episode_to_air?.season_number}?episode=${tvShow?.last_episode_to_air?.episode_number}`}
+          href={`/series/${id}/season/${tvShow?.last_episode_to_air?.season_number}?episode=${tvShow?.last_episode_to_air?.episode_number}`}
         >
           <SeriesEpisodeSection
             title="Last Episode"
@@ -47,7 +48,7 @@ export default async function page({ params }: Props) {
         <SeriesSeasons
           seasons={tvShow?.seasons}
           imageBase={imageBase}
-          id={params.id}
+          id={id}
         />
         <SeriesNetworks networks={tvShow?.networks} imageBase={imageBase} />
         <SeriesProductionCompanies

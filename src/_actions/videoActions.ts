@@ -20,11 +20,16 @@ export async function getVideosAction(): Promise<VideoDoc[]> {
 }
 
 export async function getActiveLink(): Promise<string> {
-  await connectDB();
-  const videoDomain = await VideoModel.findOne({ active: true })
-    .select("url")
-    .lean();
-  return videoDomain?.url ?? "";
+  try {
+    const connected = await connectDB();
+    if (!connected) return "";
+    const videoDomain = await VideoModel.findOne({ active: true })
+      .select("url")
+      .lean();
+    return videoDomain?.url ?? "";
+  } catch {
+    return "";
+  }
 }
 
 export async function addVideoAction(url: string): Promise<void> {
