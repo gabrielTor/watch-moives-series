@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useActiveLink } from "@/context/ActiveLinkContext";
 
 interface VideoPlayerType {
@@ -12,19 +12,23 @@ interface SeriesPlayer extends VideoPlayerType {
   season: number | string;
 }
 
+type SpanishState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "ready"; url: string }
+  | { status: "error" };
+
 function LangToggle({
   lang,
-  hasSpanish,
+  loading,
   onChange,
 }: {
   lang: "en" | "es";
-  hasSpanish: boolean;
+  loading: boolean;
   onChange: (l: "en" | "es") => void;
 }) {
-  if (!hasSpanish) return null;
-
   return (
-    <div className="flex gap-2 mb-2">
+    <div className="flex items-center gap-2 mb-2">
       <button
         onClick={() => onChange("en")}
         className={`px-3 py-1 rounded-lg text-sm font-semibold transition ${
@@ -37,13 +41,17 @@ function LangToggle({
       </button>
       <button
         onClick={() => onChange("es")}
-        className={`px-3 py-1 rounded-lg text-sm font-semibold transition ${
+        disabled={loading}
+        className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-semibold transition disabled:opacity-60 ${
           lang === "es"
             ? "bg-blue-600 text-white"
             : "bg-gray-700 text-gray-300 hover:bg-gray-600"
         }`}
       >
         ES
+        {loading && (
+          <span className="inline-block w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+        )}
       </button>
     </div>
   );
@@ -52,26 +60,79 @@ function LangToggle({
 export const VideoPlayer = ({ imdb_id, title }: VideoPlayerType) => {
   const { activeLink, spanishLink } = useActiveLink();
   const [lang, setLang] = useState<"en" | "es">("en");
+  const [spanish, setSpanish] = useState<SpanishState>({ status: "idle" });
 
-  const base = lang === "es" && spanishLink ? spanishLink : activeLink;
-  const embedUrl = `${base}/embed/movie/${imdb_id}`;
+  const handleLangChange = useCallback(
+    async (l: "en" | "es") => {
+      setLang(l);
+      if (l !== "es") return;
+
+      // Already have a static admin-configured Spanish URL
+      if (spanishLink) return;
+
+      // Already fetched or loading
+      if (spanish.status === "ready" || spanish.status === "loading") return;
+
+      setSpanish({ status: "loading" });
+      try {
+        const res = await fetch(
+          `/api/spanish-embed?title=${encodeURIComponent(title ?? String(imdb_id))}`
+        );
+        const data = await res.json();
+        if (data.url) {
+          setSpanish({ status: "ready", url: data.url });
+        } else {
+          setSpanish({ status: "error" });
+        }
+      } catch {
+        setSpanish({ status: "error" });
+      }
+    },
+    [spanishLink, spanish.status, title, imdb_id]
+  );
+
+  const getEmbedUrl = () => {
+    if (lang === "es") {
+      if (spanishLink) return `${spanishLink}/embed/movie/${imdb_id}`;
+      if (spanish.status === "ready") return spanish.url;
+      return null;
+    }
+    return `${activeLink}/embed/movie/${imdb_id}`;
+  };
+
+  const embedUrl = getEmbedUrl();
 
   return (
     <div className="flex flex-col w-full lg:flex-grow">
       <LangToggle
         lang={lang}
-        hasSpanish={!!spanishLink}
-        onChange={setLang}
+        loading={spanish.status === "loading"}
+        onChange={handleLangChange}
       />
-      <iframe
-        key={embedUrl}
-        title={title}
-        className="w-full lg:flex-grow lg:h-auto h-96 rounded-lg"
-        src={embedUrl}
-        allowFullScreen
-        allow="autoplay; encrypted-media; picture-in-picture"
-        referrerPolicy="origin"
-      />
+
+      {lang === "es" && spanish.status === "error" && (
+        <div className="w-full h-96 rounded-lg bg-gray-900 flex items-center justify-center text-gray-400 text-sm">
+          Spanish version not available for this title.
+        </div>
+      )}
+
+      {lang === "es" && spanish.status === "loading" && (
+        <div className="w-full h-96 rounded-lg bg-gray-900 flex items-center justify-center text-gray-400 text-sm">
+          Loading Spanish version…
+        </div>
+      )}
+
+      {embedUrl && (
+        <iframe
+          key={embedUrl}
+          title={title}
+          className="w-full lg:flex-grow lg:h-auto h-96 rounded-lg"
+          src={embedUrl}
+          allowFullScreen
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerPolicy="origin"
+        />
+      )}
     </div>
   );
 };
@@ -84,26 +145,77 @@ export const SeriesVideoPlayer = ({
 }: SeriesPlayer) => {
   const { activeLink, spanishLink } = useActiveLink();
   const [lang, setLang] = useState<"en" | "es">("en");
+  const [spanish, setSpanish] = useState<SpanishState>({ status: "idle" });
 
-  const base = lang === "es" && spanishLink ? spanishLink : activeLink;
-  const embedUrl = `${base}/embed/tv?tmdb=${imdb_id}&season=${season}&episode=${episode}`;
+  const handleLangChange = useCallback(
+    async (l: "en" | "es") => {
+      setLang(l);
+      if (l !== "es") return;
+
+      if (spanishLink) return;
+      if (spanish.status === "ready" || spanish.status === "loading") return;
+
+      setSpanish({ status: "loading" });
+      try {
+        const res = await fetch(
+          `/api/spanish-embed?title=${encodeURIComponent(title ?? String(imdb_id))}`
+        );
+        const data = await res.json();
+        if (data.url) {
+          setSpanish({ status: "ready", url: data.url });
+        } else {
+          setSpanish({ status: "error" });
+        }
+      } catch {
+        setSpanish({ status: "error" });
+      }
+    },
+    [spanishLink, spanish.status, title, imdb_id]
+  );
+
+  const getEmbedUrl = () => {
+    if (lang === "es") {
+      if (spanishLink)
+        return `${spanishLink}/embed/tv?tmdb=${imdb_id}&season=${season}&episode=${episode}`;
+      if (spanish.status === "ready") return spanish.url;
+      return null;
+    }
+    return `${activeLink}/embed/tv?tmdb=${imdb_id}&season=${season}&episode=${episode}`;
+  };
+
+  const embedUrl = getEmbedUrl();
 
   return (
     <div className="flex flex-col w-full h-full">
       <LangToggle
         lang={lang}
-        hasSpanish={!!spanishLink}
-        onChange={setLang}
+        loading={spanish.status === "loading"}
+        onChange={handleLangChange}
       />
-      <iframe
-        key={embedUrl}
-        title={title}
-        className="w-full h-full rounded-lg"
-        src={embedUrl}
-        allowFullScreen
-        allow="autoplay; encrypted-media; picture-in-picture"
-        referrerPolicy="origin"
-      />
+
+      {lang === "es" && spanish.status === "error" && (
+        <div className="w-full h-96 rounded-lg bg-gray-900 flex items-center justify-center text-gray-400 text-sm">
+          Spanish version not available for this title.
+        </div>
+      )}
+
+      {lang === "es" && spanish.status === "loading" && (
+        <div className="w-full h-96 rounded-lg bg-gray-900 flex items-center justify-center text-gray-400 text-sm">
+          Loading Spanish version…
+        </div>
+      )}
+
+      {embedUrl && (
+        <iframe
+          key={embedUrl}
+          title={title}
+          className="w-full h-full rounded-lg"
+          src={embedUrl}
+          allowFullScreen
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerPolicy="origin"
+        />
+      )}
     </div>
   );
 };
