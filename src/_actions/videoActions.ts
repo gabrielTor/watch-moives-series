@@ -7,6 +7,7 @@ interface VideoDoc {
   _id: string;
   url: string;
   active: boolean;
+  language: "en" | "es";
 }
 
 export async function getVideosAction(): Promise<VideoDoc[]> {
@@ -16,25 +17,39 @@ export async function getVideosAction(): Promise<VideoDoc[]> {
     _id: v._id.toString(),
     url: v.url ?? "",
     active: v.active ?? false,
+    language: (v.language as "en" | "es") ?? "en",
   }));
 }
 
-export async function getActiveLink(): Promise<string> {
+export async function getActiveLinks(): Promise<{ en: string; es: string }> {
   try {
     const connected = await connectDB();
-    if (!connected) return "";
-    const videoDomain = await VideoModel.findOne({ active: true })
-      .select("url")
-      .lean();
-    return videoDomain?.url ?? "";
+    if (!connected) return { en: "", es: "" };
+    const [enDomain, esDomain] = await Promise.all([
+      VideoModel.findOne({ active: true, language: "en" }).select("url").lean(),
+      VideoModel.findOne({ active: true, language: "es" }).select("url").lean(),
+    ]);
+    return {
+      en: enDomain?.url ?? "",
+      es: esDomain?.url ?? "",
+    };
   } catch {
-    return "";
+    return { en: "", es: "" };
   }
 }
 
-export async function addVideoAction(url: string): Promise<void> {
+/** @deprecated use getActiveLinks */
+export async function getActiveLink(): Promise<string> {
+  const { en } = await getActiveLinks();
+  return en;
+}
+
+export async function addVideoAction(
+  url: string,
+  language: "en" | "es" = "en"
+): Promise<void> {
   await connectDB();
-  await VideoModel.create({ url, active: true });
+  await VideoModel.create({ url, active: true, language });
 }
 
 export async function toggleVideoAction(id: string): Promise<void> {

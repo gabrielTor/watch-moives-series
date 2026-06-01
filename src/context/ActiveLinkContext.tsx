@@ -4,6 +4,7 @@ import { createContext, useContext, ReactNode, useMemo } from "react";
 
 interface ActiveLinkContextType {
   activeLink: string;
+  spanishLink: string;
 }
 
 const ActiveLinkContext = createContext<ActiveLinkContextType | null>(null);
@@ -11,14 +12,16 @@ const ActiveLinkContext = createContext<ActiveLinkContextType | null>(null);
 export function ActiveLinkProvider({
   children,
   link,
+  spanishLink,
 }: {
   children: ReactNode;
   link: string;
+  spanishLink: string;
 }) {
-  const activeLink = useMemo(() => link, [link]);
+  const value = useMemo(() => ({ activeLink: link, spanishLink }), [link, spanishLink]);
 
   return (
-    <ActiveLinkContext.Provider value={{ activeLink }}>
+    <ActiveLinkContext.Provider value={value}>
       {children}
     </ActiveLinkContext.Provider>
   );

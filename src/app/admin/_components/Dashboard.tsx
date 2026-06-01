@@ -12,11 +12,13 @@ interface Video {
   _id: string;
   url: string;
   active: boolean;
+  language: "en" | "es";
 }
 
 export function Dashboard() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [newUrl, setNewUrl] = useState("");
+  const [newLang, setNewLang] = useState<"en" | "es">("en");
   const [isPending, startTransition] = useTransition();
 
   async function refresh() {
@@ -32,7 +34,7 @@ export function Dashboard() {
     e.preventDefault();
     if (!newUrl.trim()) return;
     startTransition(async () => {
-      await addVideoAction(newUrl.trim());
+      await addVideoAction(newUrl.trim(), newLang);
       setNewUrl("");
       await refresh();
     });
@@ -57,21 +59,31 @@ export function Dashboard() {
       <h1 className="text-2xl font-bold mb-8">Video Domains</h1>
 
       {/* Add URL */}
-      <form onSubmit={handleAdd} className="flex gap-3 mb-10">
-        <input
-          type="text"
-          placeholder="https://example.com/video"
-          value={newUrl}
-          onChange={(e) => setNewUrl(e.target.value)}
-          className="flex-1 bg-gray-800 px-4 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          type="submit"
-          disabled={isPending}
-          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-5 py-2 rounded-lg font-semibold transition"
-        >
-          Add
-        </button>
+      <form onSubmit={handleAdd} className="flex flex-col gap-3 mb-10">
+        <div className="flex gap-3">
+          <input
+            type="text"
+            placeholder="https://example.com/video"
+            value={newUrl}
+            onChange={(e) => setNewUrl(e.target.value)}
+            className="flex-1 bg-gray-800 px-4 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            value={newLang}
+            onChange={(e) => setNewLang(e.target.value as "en" | "es")}
+            className="bg-gray-800 px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-white"
+          >
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+          </select>
+          <button
+            type="submit"
+            disabled={isPending}
+            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-5 py-2 rounded-lg font-semibold transition"
+          >
+            Add
+          </button>
+        </div>
       </form>
 
       {/* Video List */}
@@ -88,6 +100,15 @@ export function Dashboard() {
               className={`flex-1 truncate ${v.active ? "text-white" : "text-gray-500 line-through"}`}
             >
               {v.url}
+            </span>
+            <span
+              className={`ml-3 px-2 py-0.5 rounded text-xs font-bold ${
+                v.language === "es"
+                  ? "bg-yellow-700 text-yellow-100"
+                  : "bg-blue-800 text-blue-100"
+              }`}
+            >
+              {(v.language ?? "en").toUpperCase()}
             </span>
             <div className="flex gap-2 ml-4">
               <button

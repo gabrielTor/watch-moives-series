@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { Suspense } from "react";
 import Footer from "@/components/Footer";
 import { LOGO } from "@/utils/getFullImgSrc";
 import { ActiveLinkProvider } from "@/context/ActiveLinkContext";
-import { getActiveLink } from "@/_actions/videoActions";
+import { getActiveLinks } from "@/_actions/videoActions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,12 +24,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const link = await getActiveLink();
+  const { en: link, es: spanishLink } = await getActiveLinks();
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ActiveLinkProvider link={link}>
+        <ActiveLinkProvider link={link} spanishLink={spanishLink}>
           <Navbar />
           <main className="min-h-screen bg-gray-950">{children}</main>
           <Footer />
