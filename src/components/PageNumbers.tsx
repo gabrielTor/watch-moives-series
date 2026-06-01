@@ -13,7 +13,7 @@ export default function PageNumbers({
   currentPage,
 }: Readonly<Props>) {
   const { push } = useRouter();
-  const { get } = useSearchParams();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const [maxVisiblePages, setMaxVisiblePages] = useState(5);
 
@@ -32,8 +32,8 @@ export default function PageNumbers({
   const endPage = Math.min(startPage + maxVisiblePages - 1, amountOfPages);
 
   const navigateToPage = (pageNumber: number) => {
-    const search = get("search");
-    const type = get("type");
+    const search = searchParams.get("search");
+    const type = searchParams.get("type");
     if (search) return push(`${pathname}?page=${pageNumber}&search=${search}`);
     else if (type) return push(`${pathname}?page=${pageNumber}&type=${type}`);
     push(`${pathname}?page=${pageNumber}`);
