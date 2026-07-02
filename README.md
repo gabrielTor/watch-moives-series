@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ctrl+Stream 🎬
 
-## Getting Started
+Netflix-style movie & TV series web app built with **Next.js (App Router)**, **TypeScript** and **TailwindCSS**, powered by the **TMDB API**.
 
-First, run the development server:
+**Live demo:** [ctrl-stream.vercel.app](https://ctrl-stream.vercel.app)
+
+## Features
+
+- 🎞️ **Featured hero banner** with backdrop art and quick actions
+- 🔥 **Trending / upcoming / top-rated carousels** for movies and TV series
+- 🔍 **Full-text search** with paginated results
+- 📄 **Per-title detail pages** — synopsis, rating, reviews, official site and YouTube trailers
+- ▶️ **Playback pages** via a third-party video rendering service
+- 🛠️ **Admin panel** backed by MongoDB for managing video source domains
+- ⚡ Server components + server actions for data fetching, `plaiceholder` blur placeholders for images
+- 📱 Fully responsive, mobile-first UI
+
+## Tech stack
+
+| Layer | Tech |
+| --- | --- |
+| Framework | Next.js 16 (App Router, Server Actions) |
+| Language | TypeScript |
+| Styling | TailwindCSS |
+| Data | TMDB API, Watchmode API, MongoDB (Mongoose) |
+| Deploy | Vercel |
+
+## Getting started
+
+```bash
+git clone https://github.com/gabrielTor/ctrl-stream.git
+cd ctrl-stream
+npm install
+```
+
+Create a `.env.local` file with:
+
+```bash
+MOVIE_DB_API_KEY=your_tmdb_api_key
+WATCH_MODE_API_KEY=your_watchmode_api_key
+MONGODB_URI=your_mongodb_connection_string
+NEXT_PUBLIC_URL=http://localhost:3000
+```
+
+Then run the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Author
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Dario Gabriel Torres** — [GitHub](https://github.com/gabrielTor) · [LinkedIn](https://www.linkedin.com/in/dario-gabriel-torres-576a3561/)
